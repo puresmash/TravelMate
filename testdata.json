@@ -1,0 +1,74 @@
+{
+  "Travel": [
+    {
+      "id": "0",
+      "title": "2016/12 Jp",
+      "accounting": ["0", "1"],
+    },
+    {
+      "id": "1",
+      "title": "2016/06 Jp",
+      "accounting": ["2"],
+    },
+  ],
+  "Accounting": [
+    {
+      "id": "0",
+      "title": "aquarium ticket",
+      "date": "2016/12/30",
+      "payment": 3,
+      "credit": [ 0, 1, 2, 5, 6],
+      "amount": 2500,
+    },
+    {
+      "id": "1",
+      "title": "dinner fare",
+      "date": "2016/12/31",
+      "payment": 1,
+      "credit": [ 0, 5, 6],
+      "amount": 900,
+    },
+    {
+      "id": "2",
+      "title": "bus ticket",
+      "date": "2016/12/30",
+      "payment": 3,
+      "credit": [ 0, 1, 2, 5, 6],
+      "amount": 2500,
+    },
+  ],
+  "Users": [
+    {
+      "id": 0,
+      "name": "Swat",
+    },
+    {
+      "id": 1,
+      "name": "Tina",
+    },
+    {
+      "id": 2,
+      "name": "SJ",
+    },
+    {
+      "id": 3,
+      "name": "Ed",
+    },
+    {
+      "id": 4,
+      "name": "Jintin",
+    },
+    {
+      "id": 5,
+      "name": "Ting",
+    },
+    {
+      "id": 6,
+      "name": "Sharon",
+    },
+    {
+      "id": 7,
+      "name": "Kuan",
+    },
+  ]
+}

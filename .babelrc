@@ -1,0 +1,14 @@
+{
+  "presets": ["react-native"],
+  "plugins": [
+    ["module-alias", [
+        { "src": "./components", "expose": "@components" },
+        { "src": "./constants", "expose": "@const" },
+        { "src": "./utils", "expose": "@utils" },
+        { "src": "./actions", "expose": "@actions" },
+        { "src": "./reducers", "expose": "@reducers" },
+        { "src": "./images", "expose": "@images" },
+    ]]
+  ]
+
+}
