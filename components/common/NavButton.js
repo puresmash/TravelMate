@@ -7,6 +7,7 @@ import {
   TouchableHighlight
 } from 'react-native'
 import {connect} from 'react-redux';
+import Icon from 'react-native-vector-icons/Ionicons'
 import EventEmitter from 'EventEmitter';
 import EmitterUtils from '@utils/EmitterUtils.js';
 
@@ -17,13 +18,26 @@ class NavButton extends Component{
   }
 
   render(){
+    const { fnPress, text, icon } = this.props;
     return(
       <TouchableHighlight
         onPress={() => {
-          EmitterUtils.emit(this.props.name);
+          if(fnPress){
+            fnPress();
+            return;
+          }
+          EmitterUtils.emit(this.props.target);
         }}
         style={[styles.header, styles.headerButton]}>
-        <Text style={styles.buttonText}>Done</Text>
+        { text ?
+          <Text style={styles.buttonText}>{text}</Text> :
+          <Icon
+            name={icon ? icon : 'ios-arrow-back'}
+            style={styles.icon}
+            size={24}
+          />
+        }
+
       </TouchableHighlight>
     );
   }
@@ -57,5 +71,9 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     borderWidth: 1,
+  },
+  icon: {
+    paddingLeft: 8,
+    paddingRight: 8,
   }
 });

@@ -32,9 +32,17 @@ export const UpdTravelTitle = (id, title) => {
   }
 }
 
+export const UpdTravelDate = (id, date) => {
+  return {
+    type: ActionTypes.UPD_TRAVEL_DATE,
+    id,
+    date,
+  }
+}
+
 export const LoadTravel = (json) =>{
   let ary = [];
-  ary = ary.concat(json['Travel']);
+  ary = ary.concat(json['travels']);
   ary = ary.map((ele)=>{
     let key = ele.id;
     let obj = ele;

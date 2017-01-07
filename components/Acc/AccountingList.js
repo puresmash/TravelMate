@@ -5,12 +5,13 @@ import {
   StyleSheet,
   Text,
   View,
-  ListView
+  ListView,
+  Dimensions
 } from 'react-native';
 import {connect} from 'react-redux';
 
-import AccountingItem from './AccountingItem.js';
-import Divider from './Divider.js';
+import AccountingItem from '@components/Acc/AccountingItem.js';
+import Divider from '@components/common/Divider.js';
 
 import Constants from '@const'
 const {Colors, Size} = Constants;
@@ -35,17 +36,12 @@ class AccountingList extends Component{
   }
   gatheringData = (props)=>{
     const { aidAry, accountingMap } = props;
-    console.log(accountingMap)
-    console.log(aidAry)
     return ary = aidAry.map((aid)=>{
       return accountingMap.get(aid);
     });
   }
   componentWillReceiveProps(nextProps){
-    console.log('OXOXOXO');
-    // console.log(nextProps.aidAry);
     if(nextProps.accountingMap != this.props.accountingMap){
-      console.log('GOGOGOG');
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections({
           Accounting: this.gatheringData(nextProps),
@@ -56,21 +52,20 @@ class AccountingList extends Component{
 
   render(){
     return (
-      <View>
+      <View style={{flex: 1, backgroundColor: 'purple'}}>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
           renderSectionHeader={this._renderHeader}
           renderSeparator={this._renderSeparator}
           style={[styles.container]}
+          enableEmptySections={true}
           // {...this.props}
         />
       </View>
     );
   }
   _renderRow = (accounting)=>{
-    console.log('renderRow');
-    console.log(accounting)
     return(
       <AccountingItem
         aid={accounting.id}
@@ -78,9 +73,9 @@ class AccountingList extends Component{
       />
     );
   }
-  _renderHeader = (sectionData, sectionId) => {
+  _renderHeader = (sectionData, sectionID) => {
     return (
-      <Divider subHeader={sectionId}/>
+      <Divider subHeader={sectionID}/>
     );
   }
   _renderSeparator = (sectionID, rowID) => {
@@ -88,7 +83,7 @@ class AccountingList extends Component{
       return;
     return(
       <View
-        key={`${sectionID}-${rowID}`}
+        key={`AL-${sectionID}-${rowID}`}
         style={{
           height: 1,
           backgroundColor: Colors.divider,
@@ -115,8 +110,9 @@ const styles = StyleSheet.create({
     // backgroundColor: '#AAAAAA',
   },
   container: {
-    // flex: 1,
-    backgroundColor: '#FFFFFF',
+    flex: 1,
+    // width: Dimensions.get('window').width,
+    backgroundColor: '#DDDDDD',
     borderColor: Colors.divider,
     borderBottomWidth: 1,
     borderTopWidth: 1,

@@ -6,12 +6,18 @@ import {
   TextInput,
   Button,
   View,
+  ScrollView,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Dimensions,
 } from 'react-native';
+// helper
+import Constants from '@const'
+const {Colors, Size} = Constants;
 import NavigatorHelper from '@utils/NavigatorHelper.js';
-import Divider from './Divider.js';
-import AccountingList from './AccountingList.js';
+// components
+import Divider from '@components/common/Divider.js';
+import AccountingList from '@components/Acc/AccountingList.js';
 // dispatch
 import Actions from '@actions';
 import {connect} from 'react-redux';
@@ -28,18 +34,27 @@ class TravelDetail extends Component{
     //   editName =
     // }
   }
+  componentWillUnmount(){
+    console.log('td cwunmount')
+  }
   render(){
     const {tid, travels, dispatch} = this.props;
     const travel = travels.get(tid);
 
     return(
-      <View style={styles.container}>
-        <Divider />
+      <ScrollView style={styles.container}>
+        <Divider subHeader="Title"/>
         <View style={[styles.row]}>
-          <Text style={styles.labelText}>Title</Text>
+          {/* <Text style={styles.labelText}>Title</Text> */}
           <TextInput
             style={styles.textInput}
             value={travel.title}
+            placeholder="Insert travel title"
+            autoCorrect={false}
+            blurOnSubmit={true}
+            selectTextOnFocus={true}
+            autoCapitalize={'none'}
+            underlineColorAndroid={'transparent'}
             onChange={(event)=>{
               let title = event.nativeEvent.text;
               dispatch(Actions.UpdTravelTitle(tid, title));
@@ -51,7 +66,7 @@ class TravelDetail extends Component{
           tid={tid}
           aidAry={travel.accounting}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -65,21 +80,22 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps)(TravelDetail);
 
-const rowHeight = 48;
-const rowPadding = 15;
 const dividerHeight = 30;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: Dimensions.get('window').width,
+    flexDirection: 'column',
     backgroundColor: '#DDDDDD',
   },
   row: {
-    padding: rowPadding,
-    height: rowHeight,
+    width: Dimensions.get('window').width,
+    padding: Size.rowPadding,
+    height: Size.rowHeight,
     flexDirection: 'row',
     borderColor: '#CCCCCC',
-    // borderBottomWidth: 1,
     borderTopWidth: 1,
+    // borderBottomWidth: 1,
     backgroundColor: '#FFFFFF',
   },
   labelText: {
@@ -87,7 +103,9 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    textAlign: 'right',
-    fontSize: 16
+    // textAlign: 'right',
+    color: Colors.black54,
+    height: Size.rowHeight,
+    alignSelf: 'center',
   }
 });

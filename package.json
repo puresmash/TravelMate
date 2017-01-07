@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "postinstall": "react-native link",
-    "test": "jest"
+    "test": "jest",
+    "android": "react-native run-android",
+    "build-release": "cd android && ./gradlew assembleRelease && cd .."
   },
   "dependencies": {
     "immutable": "^3.8.1",

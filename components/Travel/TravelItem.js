@@ -16,7 +16,8 @@ const {Colors} = Constants;
 export default class TravelItem extends Component{
 
   static propTypes = {
-      tid: PropTypes.string.isRequired,
+      // For StaticRender needed, won't get it at the first time
+      // tid: PropTypes.string.isRequired,
       travel: PropTypes.object.isRequired,
   };
 
@@ -24,11 +25,16 @@ export default class TravelItem extends Component{
     super(props);
     // console.log(typeof NavigatorHelper.getNav().pop);
   }
+
+  // componentWillUpdate(nextProps, nextState){ console.log('travelItem cwu'); }
+  // componentWillReceiveProps(nextProps){ console.log('travelItem cwrp'); }
+  // shouldComponentUpdate(nextProps){ console.log('travelItem scu'); return true; }
+  // componentWillUnmount(){ console.log('travelItem cwum'); }
   render(){
     const {tid, travel} = this.props;
 
+    console.log(`ren: ${tid}`);
     console.log(`ren: ${travel.title}`)
-    // console.log(`ren: ${travel.title}`)
     return(
 
       // <Image
@@ -37,8 +43,6 @@ export default class TravelItem extends Component{
       //   style={{height: null, width: null, flex: 1}}
       // >
       <TouchableHighlight onPress={()=>{
-        console.log('pressing TravelItem');
-        // TODO: Press to show ACCOUNTING ListView and Item
         NavigatorHelper.push({
           key: 'TravelTabView',
           title: 'TravelTabView',
@@ -48,16 +52,16 @@ export default class TravelItem extends Component{
         })
       }}>
         <View style={[styles.divider, styles.container]}>
-            <View style={styles.overlay}>
-              <View style={styles.titleContainer}>
+            {/* <View style={styles.overlay}> */}
+              {/* <View style={styles.titleContainer}> */}
                 <Text style={styles.title}>{travel.title}</Text>
+              {/* </View> */}
+              {/* <View style={styles.arrowContainer}>
+                <Icon name="ios-arrow-forward"
+                  color={Colors.light0}
+                  size={18}/>
               </View>
-              <View style={styles.arrowContainer}>
-              <Icon name="ios-arrow-forward"
-                color={Colors.light0}
-                size={24}/>
-              </View>
-            </View>
+            </View> */}
         </View>
       </TouchableHighlight>
 
@@ -65,12 +69,14 @@ export default class TravelItem extends Component{
   }
 }
 
+const rowHeight = 48;
+const rowPadding = 15;
 const styles = StyleSheet.create({
   divider: {
-    borderBottomWidth: 8,
-    borderBottomColor: '#EEEEEE',
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.divider,
     backgroundColor: 'white',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   container: {
     flex: 1,
@@ -91,16 +97,15 @@ const styles = StyleSheet.create({
     // paddingLeft: 16,
     // paddingTop: 32,
     // paddingBottom: 32,
-    // fontSize: 24,
   },
   title: {
-    // flex: 5,
-    paddingLeft: 16,
-    marginTop: 32,
-    marginBottom: 32,
+    flex: 1,
+    paddingLeft: rowPadding,
+    marginTop: rowPadding,
+    marginBottom: rowPadding,
     backgroundColor: 'transparent',
     // backgroundColor: 'rgba(255,255,255,0.5)',
-    fontSize: 24,
+    fontSize: 18,
   },
   arrowContainer: {
     flex: 1,
@@ -112,6 +117,6 @@ const styles = StyleSheet.create({
   },
   arrow: {
     textAlign: 'right',
-    fontSize: 24,
+    fontSize: 18,
   }
 });

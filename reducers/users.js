@@ -1,15 +1,22 @@
 
 import ActionTypes from '@const/ActionTypes.js';
+import Immutable from 'immutable';
 
-export default function userReducer(state={users: new Map()}, action){
+const initialState = {
+  users: Immutable.Map(),
+}
+
+export default function userReducer(state=initialState, action){
+
   switch (action.type) {
-    //
     // ADD_USER (id, name)
     case ActionTypes.ADD_USER: {
       let {users} = state;
 
-      users = new Map(users);
-      users.set(action.id, action.name);
+      users = users.set(action.id, {
+        id: action.id,
+        name: action.name,
+      })
 
       return Object.assign({}, state, {users});
     }
@@ -17,17 +24,20 @@ export default function userReducer(state={users: new Map()}, action){
     case ActionTypes.UPD_USER_NAME: {
       let {users} = state;
 
-      users = new Map(users);
       let user = users.get(action.id);
-      user.name = action.name;
+      user = {
+        ...user,
+        name: action.name,
+      }
 
+      users = users.set(action.id, user);
       return Object.assign({}, state, {users});
     }
     // LOAD_USER (userAry)
     case ActionTypes.LOAD_USER:{
-      const users = new Map(action.userAry);
+      const users = Immutable.Map(action.userAry);
       console.log('load user complete');
-      console.log(users);
+      // console.log(users);
       return Object.assign({}, state, {users});
     }
     default:

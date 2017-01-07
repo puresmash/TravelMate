@@ -10,11 +10,15 @@ import {
   TouchableHighlight
 } from 'react-native';
 import NavigatorHelper from '@utils/NavigatorHelper.js';
-import Divider from './Divider.js';
-import AccountingList from './AccountingList.js';
-import AddAccounting from './AddAccounting.js';
-import TravelDetail from './TravelDetail.js';
-import Result from './Result.js';
+// components
+import Divider from '@components/common/Divider.js';
+import TabView from '@components/common/TabView.js';
+import Toolbar from '@components/common/Toolbar.js';
+import ToolbarItem from '@components/common/ToolbarItem.js';
+import AccountingList from '@components/Acc/AccountingList.js';
+import AddNewAcc from '@components/Acc/AddNewAcc.js';
+import TravelDetail from '@components/Travel/TravelDetail.js';
+import Result from '@components/Result.js';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 // dispatch
 import Actions from '@actions';
@@ -46,13 +50,31 @@ export default class TravelTabView extends Component{
 
     return(
 
-      <ScrollableTabView
-        style={styles.container}
-        renderTabBar={()=><DefaultTabBar backgroundColor='rgba(255, 255, 255, 0.7)' />}>
-        <TravelDetail tabLabel="Detail" tid={tid} travel={travel}></TravelDetail>
-        <AddAccounting tabLabel="Add" tid={tid}></AddAccounting>
-        <Result tabLabel="Result" tid={tid}/>
-      </ScrollableTabView>
+      // <ScrollableTabView
+      //   style={styles.container}
+      //   renderTabBar={()=><DefaultTabBar backgroundColor='rgba(255, 255, 255, 0.7)' />}>
+      <TabView>
+        <TravelDetail page={1} tid={tid} />
+        <AddNewAcc page={2} tid={tid} />
+        <Result page={3} tid={tid}/>
+        <Toolbar>
+          <ToolbarItem
+            icon="ios-list-box"
+            text="List"
+            title="Travel Detail"
+          />
+          <ToolbarItem
+            icon="ios-color-wand-outline"
+            text="New"
+            title="Add New Accounting"
+          />
+          <ToolbarItem
+            icon="ios-calculator-outline"
+            text="Result"
+            title="Display Result"
+          />
+        </Toolbar>
+      </TabView>
     );
   }
 }
@@ -60,10 +82,6 @@ const rowHeight = 48;
 const rowPadding = 15;
 const dividerHeight = 30;
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 64,
-  },
   row: {
     padding: rowPadding,
     height: rowHeight,

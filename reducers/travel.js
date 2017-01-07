@@ -5,21 +5,20 @@ import Immutable from 'immutable';
 export default function travelReducer(state={travels: Immutable.Map()}, action){
 
   switch (action.type) {
-
     // ADD_PAYMENT: 'ADD_PAYMENT',
     // ADD_CREDIT: 'ADD_CREDIT',
     // ADD_AMOUNT: 'ADD_AMOUNT',
 
-    // UPD_TRAVEL_DATE: 'UPD_TRAVEL_DATE',
-
-
     // ADD_TRAVEL (id, title)
     case ActionTypes.ADD_TRAVEL: {
       let {travels} = state;
+      const old = travels;
 
       travels = travels.set(action.id, {
         id: action.id,
         title: action.title,
+        accounting: [],
+        date: '',
       });
 
       return Object.assign({}, state, {travels});
@@ -55,11 +54,23 @@ export default function travelReducer(state={travels: Immutable.Map()}, action){
 
       return Object.assign({}, state, {travels});
     }
+    // UPD_TRAVEL_DATE (id, date)
+    case ActionTypes.UPD_TRAVEL_DATE:{
+      let {travels} = state;
+      let travel = travels.get(action.id);
+      travel = {
+        ...travel,
+        date: action.date,
+      }
+      travels = travels.set(action.id, travel);
+      return Object.assign({}, state, {travels});
+    }
+
     // LOAD_TRAVEL (travelAry)
     case ActionTypes.LOAD_TRAVEL:{
       const travels = Immutable.Map(action.travelAry);
       console.log('load travel complete');
-      console.log(travels);
+      // console.log(travels);
       return Object.assign({}, state, {travels});
     }
     default:

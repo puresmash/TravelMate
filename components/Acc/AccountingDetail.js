@@ -7,14 +7,15 @@ import {
   Button,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import NavigatorHelper from '@utils/NavigatorHelper.js';
-import Divider from './Divider.js';
+import Divider from '@components/common/Divider.js';
 import Constants from '@const'
-const {Colors} = Constants;
+const {Colors, Size} = Constants;
 // dispatch
 import Actions from '@actions';
 import {connect} from 'react-redux';
@@ -47,6 +48,11 @@ class AccountingDetail extends Component{
           <TextInput
             style={styles.textInput}
             value={accounting.title}
+            autoCorrect={false}
+            blurOnSubmit={true}
+            selectTextOnFocus={true}
+            autoCapitalize={'none'}
+            underlineColorAndroid={'transparent'}
             onChange={(event)=>{
               let title = event.nativeEvent.text;
               dispatch(Actions.UpdAccountingTitle(aid, title));
@@ -59,8 +65,12 @@ class AccountingDetail extends Component{
           <Text style={styles.labelText}>Date</Text>
           <TextInput
             style={styles.textInput}
-            editable={true}
             value={accounting.date}
+            autoCorrect={false}
+            blurOnSubmit={true}
+            selectTextOnFocus={true}
+            autoCapitalize={'none'}
+            underlineColorAndroid={'transparent'}
             onChange={(event)=>{
               let date = event.nativeEvent.text;
               dispatch(Actions.UpdAccountingDate(aid, date));
@@ -90,8 +100,12 @@ class AccountingDetail extends Component{
           <Text style={styles.labelText}>Amount</Text>
           <TextInput
             style={styles.textInput}
-            editable={true}
             value={amount}
+            autoCorrect={false}
+            blurOnSubmit={true}
+            selectTextOnFocus={true}
+            autoCapitalize={'none'}
+            underlineColorAndroid={'transparent'}
             onChange={(event)=>{
               let amount = event.nativeEvent.text;
               dispatch(Actions.UpdAccountingAmount(aid, amount));
@@ -135,7 +149,7 @@ class AccountingDetail extends Component{
   }
 
   getUserName = (id)=>{
-    if(id == null)
+    if(id == null || id === '')
       return '';
 
     const {users} = this.props;
@@ -148,12 +162,12 @@ const dividerHeight = 30;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 64,
+    marginTop: Platform.OS === 'ios' ? 64 : 56,
     backgroundColor: '#DDDDDD',
   },
   row: {
     padding: rowPadding,
-    height: rowHeight,
+    height: Size.rowHeight,
     flexDirection: 'row',
     borderColor: '#CCCCCC',
     borderBottomWidth: 1,
@@ -170,6 +184,10 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     textAlign: 'right',
+    color: Colors.black54,
+    // necessary
+    height: rowHeight,
+    alignSelf: 'center',
   },
   limitText: {
     maxWidth: 150,

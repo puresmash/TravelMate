@@ -46,7 +46,7 @@ export const UpdAccountingCredit = (aid, credit) => {
 
 export const LoadAccounting = (json) =>{
   let ary = [];
-  ary = ary.concat(json['Accounting']);
+  ary = ary.concat(json['accountingMap']);
   ary = ary.map((ele)=>{
     let key = ele.id;
     let obj = ele;

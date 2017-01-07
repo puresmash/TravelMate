@@ -12,10 +12,13 @@ export default function accountingReducer(state=initialState, action){
     // ADD_ACCOUNTING (id, title)
     case ActionTypes.ADD_ACCOUNTING: {
       let {accountingMap} = state;
-
       accountingMap = accountingMap.set(action.id, {
         id: action.id,
         title: action.title,
+        date: '',
+        amount: 0,
+        payment: null,
+        credit: [],
       });
 
       return Object.assign({}, state, {accountingMap});
@@ -89,7 +92,7 @@ export default function accountingReducer(state=initialState, action){
     case ActionTypes.LOAD_ACCOUNTING:{
       const accountingMap = Immutable.Map(action.accountingAry);
       console.log('load accounting complete');
-      console.log(accountingMap);
+      // console.log(accountingMap);
       return Object.assign({}, state, {accountingMap});
     }
     default:

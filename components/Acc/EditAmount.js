@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import Divider from './Divider.js';
+import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
 import {connect} from 'react-redux';
@@ -33,10 +33,14 @@ class EditAmount extends Component{
           <Text style={styles.labelText}>Amount</Text>
           <TextInput
             style={styles.textInput}
-            value={accounting.amount}
             keyboardType="numeric"
             placeholder="insert amount"
-            onEndEditing={(event)=>{
+            autoCorrect={false}
+            blurOnSubmit={true}
+            selectTextOnFocus={true}
+            autoCapitalize={'none'}
+            underlineColorAndroid={'transparent'}
+            onSubmitEditing={(event)=>{
               let amount = event.nativeEvent.text;
               dispatch(Actions.UpdAccountingAmount(aid, amount));
               callback();
@@ -79,6 +83,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    textAlign: 'right',
+    // textAlign: 'right',
   },
 });

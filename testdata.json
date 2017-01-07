@@ -1,5 +1,5 @@
 {
-  "Travel": [
+  "travels": [
     {
       "id": "0",
       "title": "2016/12 Jp",
@@ -11,7 +11,7 @@
       "accounting": ["2"],
     },
   ],
-  "Accounting": [
+  "accountingMap": [
     {
       "id": "0",
       "title": "aquarium ticket",
@@ -37,7 +37,7 @@
       "amount": 2500,
     },
   ],
-  "Users": [
+  "users": [
     {
       "id": 0,
       "name": "Swat",

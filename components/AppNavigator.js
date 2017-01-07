@@ -4,7 +4,10 @@ import {
   View,
   StyleSheet,
   Navigator,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform,
+  AppState,
+  AsyncStorage,
 } from 'react-native'
 
 import {createStore, applyMiddleware, combineReducers} from 'redux';
@@ -15,39 +18,83 @@ const reducer = combineReducers(reducers);
 const store = createStore(
   reducer, applyMiddleware(thunk)
 );
-
-import TravelList from './TravelList.js';
-import TravelDetail from './TravelDetail.js';
-import TravelTabView from './TravelTabView.js';
-import AccountingDetail from './AccountingDetail.js';
-import EditPayment from './EditPayment.js';
-import EditCredit from './EditCredit.js';
-import NavButton from './NavButton.js';
-import EditNewAcc from './EditNewAcc.js';
-
-
+import Actions from '@actions';
+// components
+import HomeTabView from './HomeTabView.js';
+import TravelDetail from '@components/Travel/TravelDetail.js';
+import TravelTabView from '@components/Travel/TravelTabView.js';
+import AddNewTravel from '@components/Travel/AddNewTravel.js';
+import NavButton from '@components/common/NavButton.js';
+import AccountingDetail from '@components/Acc/AccountingDetail.js';
+import EditPayment from '@components/Acc/EditPayment.js';
+import EditCredit from '@components/Acc/EditCredit.js';
+import EditNewAcc from '@components/Acc/EditNewAcc.js';
+import AddNewUser from '@components/User/AddNewUser.js';
+import EditUser from '@components/User/EditUser.js';
+// utils
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import EmitterUtils from '@utils/EmitterUtils.js'
 import Data from '../testdata.json';
-import Actions from '@actions';
+import Constants from '@const'
+const {Colors} = Constants;
+const routes = [
+  {key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'}
+];
 
 export default class AppNavigator extends Component{
 
   constructor() {
-    super()
-    this._renderScene = this._renderScene.bind(this)
+    super();
+    this.state = {
+      isStoreLoading: true,
+    }
   }
 
   componentDidMount(){
-    store.dispatch(Actions.LoadTravel(Data));
-    store.dispatch(Actions.LoadUser(Data));
-    store.dispatch(Actions.LoadAccounting(Data));
+    const self = this;
+    AppState.addEventListener('change', this._handleAppStateChange)
+    this.setState({isStoreLoading: true});
+    AsyncStorage.getItem('redux_store').then((value)=>{
+      if(value && value.length){
+        console.log('Loading Store From AsyncStorage');
+        const initStore = JSON.parse(value);
+        // console.log(initStore)
+        store.dispatch(Actions.LoadTravel(initStore.travelReducer));
+        store.dispatch(Actions.LoadUser(initStore.userReducer));
+        store.dispatch(Actions.LoadAccounting(initStore.accountingReducer));
+        self.setState({isStoreLoading: false});
+        // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
+      }
+      else{
+        store.dispatch(Actions.LoadTravel(Data));
+        store.dispatch(Actions.LoadUser(Data));
+        store.dispatch(Actions.LoadAccounting(Data));
+        self.setState({isStoreLoading: false});
+        // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
+      }
+    }).catch((err)=>{
+      console.log(err);
+      store.dispatch(Actions.LoadTravel(Data));
+      store.dispatch(Actions.LoadUser(Data));
+      store.dispatch(Actions.LoadAccounting(Data));
+      self.setState({isStoreLoading: false});
+      // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
+    });
+  }
+
+  _handleAppStateChange = (currentAppState)=>{
+    // console.log('TESTING');
+    // console.log(currentAppState);
+    // console.log(store.getState());
+    let json = JSON.stringify(store.getState());
+    AsyncStorage.setItem('redux_store', json);
+  }
+
+  componentWillUnmount(){
+    AppState.removeEventListener('change', this.__handleAppStateChange)
   }
 
   render() {
-    const routes = [
-      {key: 'TravelList', title: 'TravelList', index: 0}
-    ];
     return (
       <Provider store={store}>
         <Navigator
@@ -61,20 +108,21 @@ export default class AppNavigator extends Component{
                   if (route.index === 0) {
                     return null;
                   } else {
+                    let icon = Platform.OS === 'ios' ? 'ios-arrow-back':'md-arrow-back'
                     return (
-                      <TouchableHighlight onPress={() => navigator.pop()} style={[styles.header, styles.headerButton]}>
-                        <Text style={styles.buttonText}>Back</Text>
-                      </TouchableHighlight>
+                      <NavButton fnPress={() => navigator.pop()} icon={icon} />
                     );
                   }
                 },
                 RightButton: (route, navigator, index, navState) => {
+                    if(!route.right){
+                      return null;
+                    }
 
-                    let btnRight = <NavButton name={route.key} />;
+                    let btnRight = <NavButton target={route.right} text={'+User'}/>;
                     return (
                       btnRight
                     );
-
                 },
                 Title: (route, navigator, index, navState) => {
                   return (
@@ -84,29 +132,28 @@ export default class AppNavigator extends Component{
                   );
                 },
               }}
-              style={{ backgroundColor: 'orange' }}
+              style={{ flex: 1, flexDirection: 'row', backgroundColor: 'orange', justifyContent: 'center' }}
             />
           }
         />
       </Provider>
     );
+
   }
 
   _renderScene(route, navigator) {
 
     NavigatorHelper.setNav(navigator);
 
+    // if(!this.state || !this.state.isStoreLoading)
+    //   return;
 
-    // let navProps = {
-    //   routeState : route,
-    //   navigator : navigator
-    // }
     let component = null
 
     switch(route.key) {
-      case 'TravelList' :
+      case 'Home' :
         return (
-          <TravelList />
+          <HomeTabView />
         );
       break
 
@@ -134,11 +181,22 @@ export default class AppNavigator extends Component{
         );
       break
 
-      case 'EditNewAcc':
+      case 'EditUser':
         return(
-          <EditNewAcc aid={route.aid} />
+          <EditUser uid={route.uid}/>
         );
       break;
+
+      case 'AddNewUser':
+        return(
+          <AddNewUser />
+        );
+      break;
+      // case 'EditNewAcc':
+      //   return(
+      //     <EditNewAcc aid={route.aid} />
+      //   );
+      // break;
     }
 
     // return component ? React.createElement(component, navProps) : null
@@ -150,14 +208,22 @@ const styles = StyleSheet.create({
   header: {
     flex: 1,
     justifyContent: 'center',
+    // alignItems: 'stretch',
+    // backgroundColor: 'gray',
   },
   headerText: {
-
+    ...Platform.select({
+      ios: {
+      },
+      android: {
+        color: Colors.black87,
+        fontSize: 20,
+      },
+    }),
   },
   headerButton: {
     marginLeft: 8,
     marginRight: 8,
-
   },
   buttonText: {
     paddingLeft: 8,

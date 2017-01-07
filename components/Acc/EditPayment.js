@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import Constants from '@const'
 const {Colors} = Constants;
-import CollectionView from './CollectionView.js';
+import CollectionView from '@components/common/CollectionView.js';
 import _ from 'lodash';
 // dispatch
 import Actions from '@actions';

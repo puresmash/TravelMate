@@ -6,10 +6,13 @@ import {
   ScrollView,
   Image,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
+// dispatch
 import {connect} from 'react-redux';
-
-import Divider from './Divider.js';
+// components
+import Divider from '@components/common/Divider.js';
+// helper
 import TransUtils from '@utils/TransUtils.js';
 
 class Result extends Component{
@@ -22,23 +25,26 @@ class Result extends Component{
   render(){
     let ary = this.getAccList();
     return(
-      <View style={styles.container}>
-        {ary}
+      <View>
+        <Divider subHeader="Result List"/>
+        <ScrollView style={styles.container}>
+          {ary}
+        </ScrollView>
       </View>
     );
   }
   getAccList = ()=>{
-    const { tid, travels, users } = this.props;
-    const { accountingMap } = this.props;
+    const { tid, travels, users, accountingMap } = this.props;
 
     const uidAry = TransUtils.keysArray(users);
     let userAccMap = TransUtils.genMapWithZeroVal(uidAry);
 
     let accs = travels.get(tid).accounting;
+
     accs.forEach((aid)=>{
       let acc = accountingMap.get(aid);
       let { payment, credit, amount } = acc;
-      if ( !payment || !credit || !amount)
+      if ( payment==null || !credit || !amount)
         return;
       let totalAmount = amount * credit.length;
       let last = 0;
@@ -55,6 +61,7 @@ class Result extends Component{
     });
 
     let ary = [];
+
     userAccMap.forEach((value, key)=>{
       ary.push(this.renderRow(key, value));
     });
@@ -67,7 +74,7 @@ class Result extends Component{
     return(
       <View key={uid} style={styles.row}>
         <Text style={styles.labelText}>{name}</Text>
-        <Text >{value}</Text>
+        <Text style={styles.valueText}>{value}</Text>
       </View>
     );
   }
@@ -91,15 +98,17 @@ const rowPadding = 15;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: Dimensions.get('window').width,
     backgroundColor: '#DDDDDD',
+    flexDirection: 'column',
   },
   row: {
+    width: Dimensions.get('window').width,
     padding: rowPadding,
     height: rowHeight,
     flexDirection: 'row',
     borderColor: '#CCCCCC',
     borderBottomWidth: 1,
-    borderTopWidth: 1,
     backgroundColor: '#FFFFFF',
   },
   labelText: {

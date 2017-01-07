@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import Constants from '@const'
-const {Colors} = Constants;
+const {Colors, Size} = Constants;
 
 
 export default class AccountingItem extends Component{
@@ -59,18 +59,13 @@ export default class AccountingItem extends Component{
 
 const rowHeight = 48;
 const rowPadding = 15;
-const dividerHeight = 30;
 const styles = StyleSheet.create({
-  divider: {
-    height: dividerHeight,
-    backgroundColor: '#DDDDDD',
-  },
   row: {
     // flex: 1,
     paddingTop: rowPadding,
     paddingBottom: rowPadding,
     paddingRight: rowPadding,
-    marginLeft: rowPadding,
+    paddingLeft: rowPadding,
     height: rowHeight,
     flexDirection: 'row',
     // borderColor: '#CCCCCC',

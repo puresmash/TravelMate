@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 
-import CollectionView from './CollectionView.js';
-import EditPayment from './EditPayment.js';
-import EditCredit from './EditCredit.js';
-import EditAmount from './EditAmount.js';
-import Divider from './Divider.js';
+import CollectionView from '@components/common/CollectionView.js';
+import EditPayment from '@components/Acc/EditPayment.js';
+import EditCredit from '@components/Acc/EditCredit.js';
+import EditAmount from '@components/Acc/EditAmount.js';
+import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
 import {connect} from 'react-redux';
@@ -33,7 +33,7 @@ class EditNewAcc extends Component{
     let accounting = accountingMap.get(this.props.aid);
     let payment = accounting ? accounting.payment : '';
     let credit = accounting ? accounting.credit : '';
-    let amount = accounting ? accounting.amount : '';
+    let amount = accounting ? accounting.amount.toString() : '';
     return(
       <ScrollView style={styles.container}>
         <View style={styles.row}>
@@ -102,9 +102,8 @@ class EditNewAcc extends Component{
   }
 
   getUserName = (id)=>{
-    if(!id)
+    if(id == null || id === '')
       return '';
-
     const {users} = this.props;
     return users.get(id).name;
   }
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#CCCCCC',
     borderBottomWidth: 1,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
     backgroundColor: '#FFFFFF',
   },
   labelText: {

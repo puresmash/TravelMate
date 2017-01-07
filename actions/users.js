@@ -18,7 +18,7 @@ export const UpdUserName = (id, name) => {
 
 export const LoadUser = (json) =>{
   let ary = [];
-  ary = ary.concat(json['Users']);
+  ary = ary.concat(json['users']);
   ary = ary.map((ele)=>{
     let key = ele.id;
     let obj = ele;
