@@ -1,6 +1,7 @@
 
 import ActionTypes from '@const/ActionTypes.js';
 import Immutable from 'immutable';
+import {REHYDRATE} from 'redux-persist/constants';
 
 const initialState = {
   accountingMap: Immutable.Map(),
@@ -95,6 +96,18 @@ export default function accountingReducer(state=initialState, action){
       // console.log(accountingMap);
       return Object.assign({}, state, {accountingMap});
     }
+
+    case REHYDRATE: {
+      var incoming = action.payload.accountingReducer;
+      // console.log('------------')
+      // console.log(Immutable.fromJS(incoming));
+      if (incoming){
+        let accountingMap = Immutable.Map(incoming.accountingMap);
+        return Object.assign({}, state, {accountingMap});
+      }
+      return state
+    }
+
     default:
       return state;
   }

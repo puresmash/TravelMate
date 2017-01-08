@@ -1,6 +1,7 @@
 
 import ActionTypes from '@const/ActionTypes.js';
 import Immutable from 'immutable';
+import {REHYDRATE} from 'redux-persist/constants';
 
 const initialState = {
   users: Immutable.Map(),
@@ -40,6 +41,19 @@ export default function userReducer(state=initialState, action){
       // console.log(users);
       return Object.assign({}, state, {users});
     }
+
+    case REHYDRATE: {
+      var incoming = action.payload.userReducer;
+      console.log('------REHYDRATE USER------')
+      // console.log(action.payload);
+      if (incoming){
+        console.log(incoming.users)
+        let users = Immutable.Map(incoming.users);
+        return Object.assign({}, state, {users});
+      }
+      return state
+    }
+
     default:
       return state;
   }

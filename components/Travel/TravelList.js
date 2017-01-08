@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   ScrollView,
   Dimensions,
+  AsyncStorage
 } from 'react-native';
 // components
 import bg from '@images/bg@1x.png';
@@ -54,6 +55,8 @@ class TravelList extends Component{
   }
 
   gatheringData = (travels)=>{
+    console.log('-----')
+    console.log(travels)
     let ary = [];
     for (var travel of travels.values()){
       ary.push(travel);
@@ -62,6 +65,8 @@ class TravelList extends Component{
   }
 
   componentWillReceiveProps(nextProps){
+    // console.log('----------------')
+    // console.log(nextProps.travels)
     if(nextProps.travels != this.props.travels){
       let ary = this.gatheringData(nextProps.travels);
       this.setState({

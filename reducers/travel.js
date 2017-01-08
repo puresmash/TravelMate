@@ -1,6 +1,7 @@
 
 import ActionTypes from '@const/ActionTypes.js';
 import Immutable from 'immutable';
+import {REHYDRATE} from 'redux-persist/constants';
 
 export default function travelReducer(state={travels: Immutable.Map()}, action){
 
@@ -73,6 +74,19 @@ export default function travelReducer(state={travels: Immutable.Map()}, action){
       // console.log(travels);
       return Object.assign({}, state, {travels});
     }
+
+    case REHYDRATE: {
+      var incoming = action.payload.travelReducer;
+      console.log('------REHYDRATE TRAVEL------')
+      // console.log(action.payload);
+      if (incoming){
+        console.log(incoming.travels);
+        let travels = Immutable.Map(incoming.travels);
+        return Object.assign({}, state, {travels});
+      }
+      return state
+    }
+
     default:
       return state;
   }

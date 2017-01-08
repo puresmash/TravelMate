@@ -7,17 +7,40 @@ import {
   TouchableHighlight,
   Platform,
   AppState,
-  AsyncStorage,
 } from 'react-native'
 
-import {createStore, applyMiddleware, combineReducers} from 'redux';
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import * as reducers from '@reducers';
-const reducer = combineReducers(reducers);
-const store = createStore(
-  reducer, applyMiddleware(thunk)
-);
+// import { createStore, applyMiddleware, combineReducers } from 'redux';
+// import { Provider } from 'react-redux';
+// import thunk from 'redux-thunk';
+// import { getStoredState, persistStore, autoRehydrate } from 'redux-persist';
+
+// import * as reducers from '@reducers';
+// const reducer = combineReducers(reducers);
+// const store = createStore(
+//   reducer, applyMiddleware(thunk), autoRehydrate()
+// );
+// const persistor = persistStore(store, {
+//   storage: AsyncStorage
+// });
+
+// const whitelist = ['userReducer', 'travelReducer', 'accountingReducer'];
+// const persistConfig = {
+//     storage: AsyncStorage,
+//     skipRestore: true,
+//     whitelist
+// };
+// // let store;
+// // let persistor;
+// getStoredState(persistConfig, (err, initialState) => {
+//     const initialImmutableState = {};
+//     whitelist.forEach((key) => {
+//       if (initialState[key]) initialImmutableState[key] = fromJS(initialState[key]);
+//     });
+//     const store = createStore(reducer, applyMiddleware(thunk), initialImmutableState);
+//     const persistor = persistStore(store, persistConfig);
+//     this.setState({store: store, persistor: persistor});
+// });
+
 import Actions from '@actions';
 // components
 import HomeTabView from './HomeTabView.js';
@@ -51,43 +74,43 @@ export default class AppNavigator extends Component{
   }
 
   componentDidMount(){
-    const self = this;
-    AppState.addEventListener('change', this._handleAppStateChange)
-    this.setState({isStoreLoading: true});
-    AsyncStorage.getItem('redux_store').then((value)=>{
-      if(value && value.length){
-        console.log('Loading Store From AsyncStorage');
-        const initStore = JSON.parse(value);
-        // console.log(initStore)
-        store.dispatch(Actions.LoadTravel(initStore.travelReducer));
-        store.dispatch(Actions.LoadUser(initStore.userReducer));
-        store.dispatch(Actions.LoadAccounting(initStore.accountingReducer));
-        self.setState({isStoreLoading: false});
-        // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
-      }
-      else{
-        store.dispatch(Actions.LoadTravel(Data));
-        store.dispatch(Actions.LoadUser(Data));
-        store.dispatch(Actions.LoadAccounting(Data));
-        self.setState({isStoreLoading: false});
-        // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
-      }
-    }).catch((err)=>{
-      console.log(err);
-      store.dispatch(Actions.LoadTravel(Data));
-      store.dispatch(Actions.LoadUser(Data));
-      store.dispatch(Actions.LoadAccounting(Data));
-      self.setState({isStoreLoading: false});
-      // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
-    });
+    // const self = this;
+    // AppState.addEventListener('change', this._handleAppStateChange)
+    // this.setState({isStoreLoading: true});
+    // AsyncStorage.getItem('redux_store').then((value)=>{
+    //   if(value && value.length){
+    //     console.log('Loading Store From AsyncStorage');
+    //     const initStore = JSON.parse(value);
+    //     // console.log(initStore)
+    //     store.dispatch(Actions.LoadTravel(initStore.travelReducer));
+    //     store.dispatch(Actions.LoadUser(initStore.userReducer));
+    //     store.dispatch(Actions.LoadAccounting(initStore.accountingReducer));
+    //     self.setState({isStoreLoading: false});
+    //     // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
+    //   }
+    //   else{
+    //     store.dispatch(Actions.LoadTravel(Data));
+    //     store.dispatch(Actions.LoadUser(Data));
+    //     store.dispatch(Actions.LoadAccounting(Data));
+    //     self.setState({isStoreLoading: false});
+    //     // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
+    //   }
+    // }).catch((err)=>{
+    //   console.log(err);
+    //   store.dispatch(Actions.LoadTravel(Data));
+    //   store.dispatch(Actions.LoadUser(Data));
+    //   store.dispatch(Actions.LoadAccounting(Data));
+    //   self.setState({isStoreLoading: false});
+    //   // NavigatorHelper.push({key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'});
+    // });
   }
 
   _handleAppStateChange = (currentAppState)=>{
     // console.log('TESTING');
     // console.log(currentAppState);
     // console.log(store.getState());
-    let json = JSON.stringify(store.getState());
-    AsyncStorage.setItem('redux_store', json);
+    // let json = JSON.stringify(store.getState());
+    // AsyncStorage.setItem('redux_store', json);
   }
 
   componentWillUnmount(){
@@ -96,47 +119,45 @@ export default class AppNavigator extends Component{
 
   render() {
     return (
-      <Provider store={store}>
-        <Navigator
-          initialRoute={routes[0]}
-          initialRouteStack={routes}
-          renderScene={this._renderScene}
-          navigationBar={
-            <Navigator.NavigationBar
-              routeMapper={{
-                LeftButton: (route, navigator, index, navState) => {
-                  if (route.index === 0) {
-                    return null;
-                  } else {
-                    let icon = Platform.OS === 'ios' ? 'ios-arrow-back':'md-arrow-back'
-                    return (
-                      <NavButton fnPress={() => navigator.pop()} icon={icon} />
-                    );
-                  }
-                },
-                RightButton: (route, navigator, index, navState) => {
-                    if(!route.right){
-                      return null;
-                    }
-
-                    let btnRight = <NavButton target={route.right} text={'+User'}/>;
-                    return (
-                      btnRight
-                    );
-                },
-                Title: (route, navigator, index, navState) => {
+      <Navigator
+        initialRoute={routes[0]}
+        initialRouteStack={routes}
+        renderScene={this._renderScene}
+        navigationBar={
+          <Navigator.NavigationBar
+            routeMapper={{
+              LeftButton: (route, navigator, index, navState) => {
+                if (route.index === 0) {
+                  return null;
+                } else {
+                  let icon = Platform.OS === 'ios' ? 'ios-arrow-back':'md-arrow-back'
                   return (
-                    <View style={styles.header}>
-                      <Text style={styles.headerText}>{route.title}</Text>
-                    </View>
+                    <NavButton fnPress={() => navigator.pop()} icon={icon} />
                   );
-                },
-              }}
-              style={{ flex: 1, flexDirection: 'row', backgroundColor: 'orange', justifyContent: 'center' }}
-            />
-          }
-        />
-      </Provider>
+                }
+              },
+              RightButton: (route, navigator, index, navState) => {
+                  if(!route.right){
+                    return null;
+                  }
+
+                  let btnRight = <NavButton target={route.right} text={'+User'}/>;
+                  return (
+                    btnRight
+                  );
+              },
+              Title: (route, navigator, index, navState) => {
+                return (
+                  <View style={styles.header}>
+                    <Text style={styles.headerText}>{route.title}</Text>
+                  </View>
+                );
+              },
+            }}
+            style={{ flex: 1, flexDirection: 'row', backgroundColor: 'orange', justifyContent: 'center' }}
+          />
+        }
+      />
     );
 
   }

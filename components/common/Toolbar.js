@@ -12,6 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import ToolbarItem from '@components/common/ToolbarItem.js';
+import ChildrenUtils from '@utils/ChildrenUtils.js';
 
 export default class Toolbar extends Component{
   static defaultProps = {
@@ -23,6 +24,10 @@ export default class Toolbar extends Component{
     super(props);
   }
   renderToolbarItem = ()=>{
+    if(!ChildrenUtils.checkAmount(this.props)){
+      return null;
+    }
+
     let itemProps = {
       activeColor: this.props.activeColor,
       goToPage: this.props.goToPage,

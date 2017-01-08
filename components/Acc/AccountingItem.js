@@ -72,29 +72,11 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
     backgroundColor: '#FFFFFF',
   },
-  // titleContainer: {
-  //   flex: 5,
-  //   flexDirection: 'row',
-  //   justifyContent: 'flex-start',
-  //   alignItems: 'center',
-  //   alignSelf: 'stretch',
-  // },
   title: {
     flex: 1,
     // backgroundColor: 'transparent',
     //
     // fontSize: 24,
   },
-  arrowContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    backgroundColor: 'rgba(0,0,0,0.1)',
-  },
-  arrow: {
-    textAlign: 'right',
-    fontSize: 24,
-  }
+
 });

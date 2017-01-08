@@ -13,6 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import Toolbar from '@components/common/Toolbar.js';
+import ChildrenUtils from '@utils/ChildrenUtils.js';
 
 export default class TabView extends Component{
   static defaultProps = {
@@ -54,6 +55,9 @@ export default class TabView extends Component{
     );
   }
   _renderToolbar = () => {
+    if(!ChildrenUtils.checkAmount(this.props)){
+      return null;
+    }
     return this.props.children.map((child)=>{
       if(child.type === Toolbar){
         const itemProps = {
@@ -66,6 +70,9 @@ export default class TabView extends Component{
     });
   }
   _renderScrollableContent = ()=>{
+    if(!ChildrenUtils.checkAmount(this.props)){
+      return null;
+    }
     return this.props.children.map((child)=>{
       if(child.type !== Toolbar && child.props.page){
         return child;

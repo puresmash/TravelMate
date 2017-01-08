@@ -52,16 +52,18 @@ export default class TravelItem extends Component{
         })
       }}>
         <View style={[styles.divider, styles.container]}>
-            {/* <View style={styles.overlay}> */}
+            <View style={styles.overlay}>
               {/* <View style={styles.titleContainer}> */}
                 <Text style={styles.title}>{travel.title}</Text>
               {/* </View> */}
-              {/* <View style={styles.arrowContainer}>
-                <Icon name="ios-arrow-forward"
+              {/* <View style={styles.arrowContainer}> */}
+                <Icon
+                  style={styles.arrow}
+                  name="ios-arrow-forward"
                   color={Colors.light0}
                   size={18}/>
-              </View>
-            </View> */}
+              {/* </View> */}
+            </View>
         </View>
       </TouchableHighlight>
 
@@ -86,25 +88,27 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     flexDirection: 'row',
+    paddingLeft: rowPadding,
+    paddingRight: rowPadding,
+    paddingTop: rowPadding,
+    paddingBottom: rowPadding,
     backgroundColor: 'rgba(255,255,255,0.5)',
   },
-  titleContainer: {
-    flex: 5,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    alignSelf: 'stretch',
-    // paddingLeft: 16,
-    // paddingTop: 32,
-    // paddingBottom: 32,
-  },
+  // titleContainer: {
+  //   flex: 5,
+  //   flexDirection: 'row',
+  //   justifyContent: 'flex-start',
+  //   alignItems: 'center',
+  //   alignSelf: 'stretch',
+  //   // paddingLeft: 16,
+  //   // paddingTop: 32,
+  //   // paddingBottom: 32,
+  // },
   title: {
     flex: 1,
-    paddingLeft: rowPadding,
-    marginTop: rowPadding,
-    marginBottom: rowPadding,
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
     // backgroundColor: 'rgba(255,255,255,0.5)',
+    alignSelf: 'center',
     fontSize: 18,
   },
   arrowContainer: {
@@ -116,7 +120,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.1)',
   },
   arrow: {
-    textAlign: 'right',
+    // textAlign: 'right',
+    alignSelf: 'center',
     fontSize: 18,
   }
 });

@@ -7,7 +7,8 @@ import {
   View,
   ListView,
   TouchableHighlight,
-  Dimensions
+  Dimensions,
+  AsyncStorage
 } from 'react-native';
 // dispatch
 import {connect} from 'react-redux';
@@ -83,7 +84,7 @@ class UserList extends Component{
 
   _renderRow = (user)=>{
     if(!user.name)
-      return;
+      return null;
     const uid = user.id;
     return(
         <TouchableHighlight onPress={()=>{

@@ -21,7 +21,7 @@ class EditUser extends Component{
 
   static defaultProps = {};
   static propTypes = {
-    uid: PropTypes.number.isRequired,
+    uid: PropTypes.string.isRequired,
   };
 
   constructor(props){

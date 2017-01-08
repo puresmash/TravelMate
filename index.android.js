@@ -4,21 +4,8 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-import AppNavigator from './components/AppNavigator.js';
+import { AppRegistry } from 'react-native';
 
-export default class TravelMate extends Component {
-  render() {
-    return (
-      <AppNavigator/>
-    );
-  }
-}
+import setup from './setup.js';
 
-AppRegistry.registerComponent('TravelMate', () => TravelMate);
+AppRegistry.registerComponent('TravelMate', setup);
