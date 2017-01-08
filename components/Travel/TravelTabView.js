@@ -19,7 +19,6 @@ import AccountingList from '@components/Acc/AccountingList.js';
 import AddNewAcc from '@components/Acc/AddNewAcc.js';
 import TravelDetail from '@components/Travel/TravelDetail.js';
 import Result from '@components/Result.js';
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 // dispatch
 import Actions from '@actions';
 import EmitterUtils from '@utils/EmitterUtils.js';
