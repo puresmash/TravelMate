@@ -1,58 +1,50 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
   View,
-  Image,
-  ListView,
-  TouchableHighlight,
   ScrollView,
-  Dimensions,
-  Platform,
 } from 'react-native';
 import ToolbarItem from '@components/common/ToolbarItem.js';
 import ChildrenUtils from '@utils/ChildrenUtils.js';
 
-export default class Toolbar extends Component{
+export default class Toolbar extends Component {
   static defaultProps = {
     activeColor: '#FF0038',
     currentPage: 1,
-    goToPage: ()=>{},
+    goToPage: () => {},
   };
-  constructor(props){
-    super(props);
-  }
-  renderToolbarItem = ()=>{
-    if(!ChildrenUtils.checkAmount(this.props)){
+
+  renderToolbarItem = () => {
+    if (!ChildrenUtils.checkAmount(this.props)) {
       return null;
     }
 
     let itemProps = {
       activeColor: this.props.activeColor,
       goToPage: this.props.goToPage,
-    }
+    };
     let count = 1;
-    return this.props.children.map((child, index)=>{
-      if(child.type !== ToolbarItem){
-        return;
+    return this.props.children.map((child, index) => {
+      if (child.type !== ToolbarItem) {
+        return null;
       }
       itemProps.key = `TI-${index}`;
       itemProps.pageIndex = count;
-      itemProps.active = this.props.currentPage === itemProps.pageIndex ? true : false;
+      itemProps.active = this.props.currentPage === itemProps.pageIndex;
       count++;
       return React.cloneElement(child, itemProps);
     });
   }
-  renderScrollableContent = ()=>{
-    return this.props.children.map((child)=>{
-      if(child.type === ScrollView){
+  renderScrollableContent = () => {
+    return this.props.children.map((child) => {
+      if (child.type === ScrollView) {
         return child;
       }
-    })
+      return null;
+    });
   }
-  render(){
-    return(
+  render() {
+    return (
       <View style={[styles.toolbarContainer, this.props.style]}>
         {this.renderToolbarItem()}
       </View>

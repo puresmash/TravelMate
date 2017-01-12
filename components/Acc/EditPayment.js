@@ -3,34 +3,30 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableHighlight,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons'
-import Constants from '@const'
-const {Colors} = Constants;
+import Icon from 'react-native-vector-icons/Ionicons';
+import Constants from '@const';
+const { Colors } = Constants;
 import CollectionView from '@components/common/CollectionView.js';
 import _ from 'lodash';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class EditPayment extends Component{
+class EditPayment extends Component {
   static defaultProps = {
-    callback: ()=>{},
+    callback: () => {},
   };
   static propTypes = {
     aid: PropTypes.string.isRequired,
   };
-  constructor(props){
-    super(props);
-  }
-  render(){
-    const {aid, users} = this.props;
-    console.log('!!!')
-    console.log(users)
-    return(
+
+  render() {
+    const { aid, users } = this.props;
+
+    return (
       <CollectionView
         style={[styles.container, this.props.style]}
         aid={aid}
@@ -40,17 +36,16 @@ class EditPayment extends Component{
     );
   }
 
-  renderBrick = (brick)=>{
-    console.log(brick);
+  renderBrick = (brick) => {
     let iconName = 'ios-checkmark-circle-outline';
 
     const { aid, accountingMap } = this.props;
-    let acc = accountingMap.get(aid);
-    if(acc && acc.payment === brick.id){
+    const acc = accountingMap.get(aid);
+    if (acc && acc.payment === brick.id) {
       iconName = 'ios-checkmark-circle';
     }
     return (
-      <TouchableHighlight key={brick.id} onPress={()=>{
+      <TouchableHighlight key={brick.id} onPress={() => {
         this.fnOnPress(aid, brick.id);
       }}>
         <View style={styles.brick}>
@@ -58,20 +53,20 @@ class EditPayment extends Component{
           <Icon name={iconName}
             style={styles.checkmark}
             color={'green'}
-            size={18}/>
+            size={18} />
         </View>
       </TouchableHighlight>
     );
   }
 
-  fnOnPress = (aid, selectId)=>{
+  fnOnPress = (aid, selectId) => {
     const { dispatch, callback } = this.props;
     dispatch(Actions.UpdAccountingPayment(aid, selectId));
     callback();
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { users } = state.userReducer;
   const { accountingMap } = state.accountingReducer;
 

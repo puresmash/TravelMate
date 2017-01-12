@@ -1,27 +1,25 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
   ListView,
   TouchableHighlight,
   Dimensions,
-  AsyncStorage
 } from 'react-native';
 // dispatch
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 // components
 import Divider from '@components/common/Divider.js';
 // helper
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import EmitterUtils from '@utils/EmitterUtils.js';
-import Constants from '@const'
-const {Colors, Size} = Constants;
+import Constants from '@const';
+const { Colors, Size } = Constants;
 
-class UserList extends Component{
-  constructor(props){
+class UserList extends Component {
+  constructor(props) {
     super(props);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
@@ -31,11 +29,11 @@ class UserList extends Component{
       dataSource: ds.cloneWithRowsAndSections({
         UserList: this.gatheringData(props),
       }),
-    }
+    };
   }
 
-  componentWillMount(){
-    this.subscription = EmitterUtils.on('AddNewUser', ()=>{
+  componentWillMount() {
+    this.subscription = EmitterUtils.on('AddNewUser', () => {
       NavigatorHelper.push({
         key: 'AddNewUser',
         title: 'AddNewUser',
@@ -44,21 +42,22 @@ class UserList extends Component{
     });
   }
 
-  componentWillUnmount(){
-    if(this.subscription)
+  componentWillUnmount() {
+    if (this.subscription) {
       this.subscription.remove();
+    }
   }
 
-  gatheringData = (props)=>{
-    let ary = [];
-    for(let user of props.users.values()){
+  gatheringData = (props) => {
+    const ary = [];
+    for (const user of props.users.values()) {
       ary.push(user);
     }
     return ary;
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.users != this.props.users){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.users !== this.props.users) {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections({
           UserList: this.gatheringData(nextProps),
@@ -67,27 +66,27 @@ class UserList extends Component{
     }
   }
 
-  render(){
-    return(
-      <View style={{flex: 1, backgroundColor: '#DDDDDD'}}>
+  render() {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#DDDDDD' }}>
         <ListView
           style={styles.container}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
           renderSeparator={this._renderSeparator}
           renderSectionHeader={this._renderHeader}
-          enableEmptySections={true}
+          enableEmptySections
         />
       </View>
     );
   }
 
-  _renderRow = (user)=>{
-    if(!user.name)
+  _renderRow = (user) => {
+    if (!user.name)
       return null;
     const uid = user.id;
-    return(
-        <TouchableHighlight onPress={()=>{
+    return (
+        <TouchableHighlight onPress={() => {
           NavigatorHelper.push({
             key: 'EditUser',
             title: 'EditUser',
@@ -102,17 +101,18 @@ class UserList extends Component{
     );
   }
 
-  _renderHeader = (sectionData, sectionID)=>{
-    return(
-      <Divider subHeader={sectionID}/>
+  _renderHeader = (sectionData, sectionID) => {
+    return (
+      <Divider subHeader={sectionID} />
     );
   }
 
   _renderSeparator = (sectionID, rowID) => {
-    if(rowID == this.props.users.size-1)
-      return;
-      // console.log(`${sectionID}-${rowID}`)
-    return(
+    if (rowID === this.props.users.size - 1) {
+      return null;
+    }
+    // console.log(`${sectionID}-${rowID}`)
+    return (
       <View
         key={`UL-${sectionID}-${rowID}`}
         style={{
@@ -125,7 +125,7 @@ class UserList extends Component{
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { users } = state.userReducer;
   return {
     users,
@@ -144,9 +144,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderTopWidth: 1,
   },
-  listview:{
-
-  },
+  listview: { },
   row: {
     // flex: 1,
     paddingTop: rowPadding,

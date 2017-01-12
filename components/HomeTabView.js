@@ -1,15 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ListView,
-  TouchableHighlight,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {} from 'react-native';
 // components
 import TabView from '@components/common/TabView.js';
 import Toolbar from '@components/common/Toolbar.js';
@@ -18,17 +8,15 @@ import TravelList from '@components/Travel/TravelList.js';
 import AddNewTravel from '@components/Travel/AddNewTravel.js';
 import UserList from '@components/User/UserList.js';
 
-export default class Home extends Component{
-  constructor(props){
-    super(props);
-  }
-  render(){
-    return(
+export default class Home extends Component {
+
+  render() {
+    return (
       <TabView>
         {/* items here must set {width: Dimensions.get('window').width} */}
-        <TravelList page={1}/>
-        <AddNewTravel page={2}/>
-        <UserList page={3}/>
+        <TravelList page={1} />
+        <AddNewTravel page={2} />
+        <UserList page={3} />
         <Toolbar>
           <ToolbarItem
             icon="ios-list-box"

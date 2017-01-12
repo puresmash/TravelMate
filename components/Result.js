@@ -4,27 +4,23 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
-  TouchableHighlight,
   Dimensions,
 } from 'react-native';
 // dispatch
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 // components
 import Divider from '@components/common/Divider.js';
 // helper
 import TransUtils from '@utils/TransUtils.js';
 
-class Result extends Component{
+class Result extends Component {
   static propTypes = {
     tid: PropTypes.string.isRequired,
   };
-  constructor(props){
-    super(props);
-  }
-  render(){
-    let ary = this.getAccList();
-    return(
+
+  render() {
+    const ary = this.getAccList();
+    return (
       <View>
         <Divider subHeader="Result List"/>
         <ScrollView style={styles.container}>
@@ -33,45 +29,47 @@ class Result extends Component{
       </View>
     );
   }
-  getAccList = ()=>{
+  getAccList = () => {
     const { tid, travels, users, accountingMap } = this.props;
 
     const uidAry = TransUtils.keysArray(users);
-    let userAccMap = TransUtils.genMapWithZeroVal(uidAry);
+    const userAccMap = TransUtils.genMapWithZeroVal(uidAry);
 
-    let accs = travels.get(tid).accounting;
+    const accs = travels.get(tid).accounting;
 
-    accs.forEach((aid)=>{
-      let acc = accountingMap.get(aid);
-      let { payment, credit, amount } = acc;
-      if ( payment==null || !credit || !amount)
-        return;
-      let totalAmount = amount * credit.length;
+    accs.forEach((aid) => {
+      const acc = accountingMap.get(aid);
+      const { payment, credit, amount } = acc;
+      if (payment == null || !credit || !amount) {
+        return null;
+      }
+
+      const totalAmount = amount * credit.length;
       let last = 0;
 
       // payment
       last = userAccMap.get(payment);
-      userAccMap.set(payment, (last-totalAmount));
+      userAccMap.set(payment, (last - totalAmount));
 
       // credit
-      credit.forEach((uid)=>{
+      credit.forEach((uid) => {
         last = userAccMap.get(uid);
-        userAccMap.set(uid, (last+amount));
+        userAccMap.set(uid, (last + amount));
       });
     });
 
-    let ary = [];
+    const ary = [];
 
-    userAccMap.forEach((value, key)=>{
+    userAccMap.forEach((value, key) => {
       ary.push(this.renderRow(key, value));
     });
 
     return ary;
   }
-  renderRow = (uid, value)=>{
+  renderRow = (uid, value) => {
     const { users } = this.props;
-    let name = users.get(uid).name;
-    return(
+    const name = users.get(uid).name;
+    return (
       <View key={uid} style={styles.row}>
         <Text style={styles.labelText}>{name}</Text>
         <Text style={styles.valueText}>{value}</Text>
@@ -80,7 +78,7 @@ class Result extends Component{
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { users } = state.userReducer;
   const { accountingMap } = state.accountingReducer;
   const { travels } = state.travelReducer;

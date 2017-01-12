@@ -1,34 +1,28 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
   View,
   ListView,
-  Image,
-  TouchableHighlight,
   Dimensions,
 } from 'react-native';
 
-export default class CollectionView extends Component{
+export default class CollectionView extends Component {
   static propTypes = {
     aid: PropTypes.string.isRequired,
     renderBrick: PropTypes.func.isRequired,
     // items: array, or iterable object,
     // style of container
   };
-  constructor(props){
-    super(props);
-  }
-  render(){
-    let data = this.arrangeCollection(this.props.items);
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    console.log(data)
-    return(
+
+  render() {
+    const data = this.arrangeCollection(this.props.items);
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
+    return (
       <View {...this.props}>
         <ListView
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           renderRow={this.renderRow}
           dataSource={ds.cloneWithRows(data)}
         />
@@ -36,10 +30,8 @@ export default class CollectionView extends Component{
     );
   }
 
-  renderRow = (bricks)=> {
-    let items = bricks.map((ele)=>{
-      return this.props.renderBrick(ele);
-    });
+  renderRow = (bricks) => {
+    const items = bricks.map((ele) => this.props.renderBrick(ele));
     return (
       <View style={styles.row}>
         {items}
@@ -51,14 +43,14 @@ export default class CollectionView extends Component{
   //
   // }
 
-  arrangeCollection = (collection)=>{
+  arrangeCollection = (collection) => {
     const ROW_SIZE = 3;
-    let ary = [];
+    const ary = [];
     let row = [];
-    collection.forEach((ele)=>{
-      let brick = ele;
+    collection.forEach((ele) => {
+      const brick = ele;
 
-      if(row.length === ROW_SIZE){
+      if (row.length === ROW_SIZE) {
         ary.push(row);
         row = [brick];
       }
@@ -75,7 +67,7 @@ export default class CollectionView extends Component{
   }
 }
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
+// const SCREEN_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   row: {
     flex: 1,

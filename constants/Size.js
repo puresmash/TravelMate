@@ -3,4 +3,4 @@ export default {
   rowPadding: 15,
   dividerHeight: 30,
   navHeight: 64,
-}
+};

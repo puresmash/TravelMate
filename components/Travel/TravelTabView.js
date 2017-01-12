@@ -1,13 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
-  TextInput,
-  Button,
-  View,
-  Image,
-  TouchableHighlight
 } from 'react-native';
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
@@ -23,31 +16,23 @@ import Result from '@components/Result.js';
 import Actions from '@actions';
 import EmitterUtils from '@utils/EmitterUtils.js';
 
-export default class TravelTabView extends Component{
+export default class TravelTabView extends Component {
 
   static propTypes = {
       tid: PropTypes.string.isRequired,
       travel: PropTypes.object.isRequired,
   };
 
-  constructor(props){
-    super(props);
-    // this.state = {
-    //   editName =
-    // }
-
-  }
-
-  componentDidMount(){
-    EmitterUtils.on('TravelTabView', ()=>{
+  componentDidMount() {
+    EmitterUtils.on('TravelTabView', () => {
       console.log('!!!!!!!aloha aloha');
     });
   }
 
-  render(){
-    const {tid, travel} = this.props;
+  render() {
+    const { tid, travel } = this.props;
 
-    return(
+    return (
 
       // <ScrollableTabView
       //   style={styles.container}
@@ -55,7 +40,7 @@ export default class TravelTabView extends Component{
       <TabView>
         <TravelDetail page={1} tid={tid} />
         <AddNewAcc page={2} tid={tid} />
-        <Result page={3} tid={tid}/>
+        <Result page={3} tid={tid} />
         <Toolbar>
           <ToolbarItem
             icon="ios-list-box"
@@ -79,7 +64,6 @@ export default class TravelTabView extends Component{
 }
 const rowHeight = 48;
 const rowPadding = 15;
-const dividerHeight = 30;
 const styles = StyleSheet.create({
   row: {
     padding: rowPadding,

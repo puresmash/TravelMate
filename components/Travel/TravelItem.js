@@ -1,19 +1,17 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableHighlight
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
-import NavigatorHelper from '@utils/NavigatorHelper.js'
-import Constants from '@const'
-const {Colors} = Constants;
+import Icon from 'react-native-vector-icons/Ionicons';
+import NavigatorHelper from '@utils/NavigatorHelper.js';
+import Constants from '@const';
+const { Colors, Size } = Constants;
 
-export default class TravelItem extends Component{
+export default class TravelItem extends Component {
 
   static propTypes = {
       // For StaticRender needed, won't get it at the first time
@@ -21,28 +19,24 @@ export default class TravelItem extends Component{
       travel: PropTypes.object.isRequired,
   };
 
-  constructor(props){
-    super(props);
-    // console.log(typeof NavigatorHelper.getNav().pop);
-  }
-
   // componentWillUpdate(nextProps, nextState){ console.log('travelItem cwu'); }
   // componentWillReceiveProps(nextProps){ console.log('travelItem cwrp'); }
   // shouldComponentUpdate(nextProps){ console.log('travelItem scu'); return true; }
   // componentWillUnmount(){ console.log('travelItem cwum'); }
-  render(){
-    const {tid, travel} = this.props;
+
+  render() {
+    const { tid, travel } = this.props;
 
     console.log(`ren: ${tid}`);
-    console.log(`ren: ${travel.title}`)
-    return(
+    console.log(`ren: ${travel.title}`);
+    return (
 
       // <Image
       //   source={require('../burger.png')}
       //   resizeMode='contain'
       //   style={{height: null, width: null, flex: 1}}
       // >
-      <TouchableHighlight onPress={()=>{
+      <TouchableHighlight onPress={() => {
         NavigatorHelper.push({
           key: 'TravelTabView',
           title: 'TravelTabView',
@@ -61,7 +55,8 @@ export default class TravelItem extends Component{
                   style={styles.arrow}
                   name="ios-arrow-forward"
                   color={Colors.light0}
-                  size={18}/>
+                  size={18}
+                />
               {/* </View> */}
             </View>
         </View>
@@ -71,8 +66,6 @@ export default class TravelItem extends Component{
   }
 }
 
-const rowHeight = 48;
-const rowPadding = 15;
 const styles = StyleSheet.create({
   divider: {
     borderBottomWidth: 1,
@@ -88,10 +81,7 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     flexDirection: 'row',
-    paddingLeft: rowPadding,
-    paddingRight: rowPadding,
-    paddingTop: rowPadding,
-    paddingBottom: rowPadding,
+    padding: Size.rowPadding,
     backgroundColor: 'rgba(255,255,255,0.5)',
   },
   // titleContainer: {

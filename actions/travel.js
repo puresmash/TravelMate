@@ -1,55 +1,41 @@
 
 import ActionTypes from '@const/ActionTypes';
 
-export const AddTravel = (id, title) => {
-  return {
+export const AddTravel = (id, title) => ({
     type: ActionTypes.ADD_TRAVEL,
     id,
     title,
-  }
-}
-// export const AddAccounting = (id, accounting) => {
-//   return {
-//     type: ActionTypes.UPD_RESTAURANT_NAME,
-//     id,
-//     accounting,
-//   }
-// }
+  });
 
-export const UpdAccountingList = (tid, aidAry) => {
-  return {
+export const UpdAccountingList = (tid, aidAry) => ({
     type: ActionTypes.UPD_ACCOUNTING_LIST,
     tid,
     aidAry,
-  }
-}
+  });
 
-export const UpdTravelTitle = (id, title) => {
-  return {
+export const UpdTravelTitle = (id, title) => ({
     type: ActionTypes.UPD_TRAVEL_TITLE,
     id,
     title,
-  }
-}
+  });
 
-export const UpdTravelDate = (id, date) => {
-  return {
+export const UpdTravelDate = (id, date) => ({
     type: ActionTypes.UPD_TRAVEL_DATE,
     id,
     date,
-  }
-}
+  });
 
-export const LoadTravel = (json) =>{
+//
+export const LoadTravel = (json) => {
   let ary = [];
   ary = ary.concat(json['travels']);
-  ary = ary.map((ele)=>{
-    let key = ele.id;
-    let obj = ele;
+  ary = ary.map((ele) => {
+    const key = ele.id;
+    const obj = ele;
     return [key, obj];
   });
   return {
     type: ActionTypes.LOAD_TRAVEL,
     travelAry: ary,
-  }
-}
+  };
+};

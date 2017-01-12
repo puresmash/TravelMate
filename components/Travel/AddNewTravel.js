@@ -4,53 +4,52 @@ import {
   Text,
   TextInput,
   View,
-  TouchableHighlight,
   Dimensions,
 } from 'react-native';
-import Constants from '@const'
-const {Colors, Size} = Constants;
+import Constants from '@const';
+const { Colors, Size } = Constants;
 
 import Divider from '@components/common/Divider.js';
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class AddNewTravel extends Component{
+class AddNewTravel extends Component {
 
   static defaultProps = {};
   static propTypes = {};
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       step: 1,
-    }
+    };
   }
-  render(){
+  render() {
     const { step } = this.state;
-    return(
+    return (
       <View style={styles.container}>
-        <Divider subHeader="Title"/>
+        <Divider subHeader="Title" />
         <View style={styles.row}>
           <TextInput
             style={styles.textInput}
             placeholder="Insert travel title"
             autoCorrect={false}
-            blurOnSubmit={true}
-            selectTextOnFocus={true}
+            blurOnSubmit
+            selectTextOnFocus
             autoCapitalize={'none'}
             underlineColorAndroid={'transparent'}
             clearButtonMode={'while-editing'}
-            onSubmitEditing={(event)=>{
-              let title = event.nativeEvent.text;
-              if(step === 1){
-                let size = this.props.travels.size;
+            onSubmitEditing={(event) => {
+              const title = event.nativeEvent.text;
+              if (step === 1) {
+                const size = this.props.travels.size;
                 this.tid = size.toString();
                 this.props.dispatch(Actions.AddTravel(this.tid, title));
-                this.setState({step: 2});
+                this.setState({ step: 2 });
               }
-              else{
+              else {
                 this.props.dispatch(Actions.UpdTravelTitle(this.tid, title));
               }
             }}
@@ -61,28 +60,28 @@ class AddNewTravel extends Component{
     );
   }
 
-  renderStep = ()=>{
+  renderStep = () => {
     const { step } = this.state;
     const { travels, dispatch } = this.props;
     const travel = travels.get(this.tid);
-    if(step === 2){
-      return(
+    if (step === 2) {
+      return (
         <View>
           <Divider subHeader="Detail" />
           <View style={styles.row}>
             <Text style={styles.labelText}>Date</Text>
             <TextInput
               style={styles.textInput}
-              value={travel ? travel.date: ''}
+              value={travel ? travel.date : ''}
               placeholder='Insert travel date'
               autoCorrect={false}
-              blurOnSubmit={true}
-              selectTextOnFocus={true}
+              blurOnSubmit
+              selectTextOnFocus
               autoCapitalize={'none'}
               underlineColorAndroid={'transparent'}
               clearButtonMode={'while-editing'}
-              onChange={(event)=>{
-                let date = event.nativeEvent.text;
+              onChange={(event) => {
+                const date = event.nativeEvent.text;
                 dispatch(Actions.UpdTravelDate(this.tid, date));
               }}
             />
@@ -95,9 +94,7 @@ class AddNewTravel extends Component{
 
 }
 
-
-
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { travels } = state.travelReducer;
   return {
     travels,

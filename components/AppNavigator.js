@@ -4,7 +4,6 @@ import {
   View,
   StyleSheet,
   Navigator,
-  TouchableHighlight,
   Platform,
   AppState,
 } from 'react-native'
@@ -58,22 +57,22 @@ import EditUser from '@components/User/EditUser.js';
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import EmitterUtils from '@utils/EmitterUtils.js'
 import Data from '../testdata.json';
-import Constants from '@const'
+import Constants from '@const';
 const {Colors} = Constants;
 const routes = [
-  {key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser'}
+  { key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser' }
 ];
 
-export default class AppNavigator extends Component{
+export default class AppNavigator extends Component {
 
   constructor() {
     super();
     this.state = {
       isStoreLoading: true,
-    }
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // const self = this;
     // AppState.addEventListener('change', this._handleAppStateChange)
     // this.setState({isStoreLoading: true});
@@ -105,7 +104,7 @@ export default class AppNavigator extends Component{
     // });
   }
 
-  _handleAppStateChange = (currentAppState)=>{
+  _handleAppStateChange = (currentAppState) => {
     // console.log('TESTING');
     // console.log(currentAppState);
     // console.log(store.getState());
@@ -113,8 +112,8 @@ export default class AppNavigator extends Component{
     // AsyncStorage.setItem('redux_store', json);
   }
 
-  componentWillUnmount(){
-    AppState.removeEventListener('change', this.__handleAppStateChange)
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.__handleAppStateChange);
   }
 
   render() {
@@ -129,22 +128,17 @@ export default class AppNavigator extends Component{
               LeftButton: (route, navigator, index, navState) => {
                 if (route.index === 0) {
                   return null;
-                } else {
-                  let icon = Platform.OS === 'ios' ? 'ios-arrow-back':'md-arrow-back'
-                  return (
-                    <NavButton fnPress={() => navigator.pop()} icon={icon} />
-                  );
                 }
+                const icon = Platform.OS === 'ios' ? 'ios-arrow-back' : 'md-arrow-back';
+                return <NavButton fnPress={() => navigator.pop()} icon={icon} />;
               },
               RightButton: (route, navigator, index, navState) => {
-                  if(!route.right){
-                    return null;
-                  }
+                if (!route.right) {
+                  return null;
+                }
 
-                  let btnRight = <NavButton target={route.right} text={'+User'}/>;
-                  return (
-                    btnRight
-                  );
+                const btnRight = <NavButton target={route.right} text={'+User'} />;
+                return btnRight;
               },
               Title: (route, navigator, index, navState) => {
                 return (
@@ -154,12 +148,16 @@ export default class AppNavigator extends Component{
                 );
               },
             }}
-            style={{ flex: 1, flexDirection: 'row', backgroundColor: 'orange', justifyContent: 'center' }}
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              backgroundColor: 'orange',
+              justifyContent: 'center'
+            }}
           />
         }
       />
     );
-
   }
 
   _renderScene(route, navigator) {
@@ -169,58 +167,31 @@ export default class AppNavigator extends Component{
     // if(!this.state || !this.state.isStoreLoading)
     //   return;
 
-    let component = null
-
-    switch(route.key) {
+    switch (route.key) {
       case 'Home' :
-        return (
-          <HomeTabView />
-        );
-      break
+        return <HomeTabView />;
 
       case 'TravelTabView' :
-        return(
-          <TravelTabView tid={route.tid} travel={route.travel}/>
-        );
-      break
+        return <TravelTabView tid={route.tid} travel={route.travel} />;
 
       case 'AccountingDetail':
-        return(
-          <AccountingDetail tid={route.tid} aid={route.aid}/>
-        );
-      break;
+        return <AccountingDetail tid={route.tid} aid={route.aid} />;
 
       case 'EditPayment':
-        return(
-          <EditPayment aid={route.aid} />
-        );
-      break
+        return <EditPayment aid={route.aid} />;
 
       case 'EditCredit':
-        return(
-          <EditCredit aid={route.aid} />
-        );
-      break
+        return <EditCredit aid={route.aid} />;
 
       case 'EditUser':
-        return(
-          <EditUser uid={route.uid}/>
-        );
-      break;
+        return <EditUser uid={route.uid} />;
 
       case 'AddNewUser':
-        return(
-          <AddNewUser />
-        );
-      break;
-      // case 'EditNewAcc':
-      //   return(
-      //     <EditNewAcc aid={route.aid} />
-      //   );
-      // break;
-    }
+        return <AddNewUser />;
 
-    // return component ? React.createElement(component, navProps) : null
+      default:
+        return null;
+    }
   }
 
 }

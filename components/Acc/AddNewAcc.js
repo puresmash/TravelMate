@@ -1,16 +1,14 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
-  Text,
   TextInput,
   View,
-  TouchableHighlight,
   Dimensions,
 } from 'react-native';
-import _ from 'lodash';
+// import _ from 'lodash';
 // helper
 import Constants from '@const'
-const {Colors, Size} = Constants;
+const { Colors, Size } = Constants;
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
 import CollectionView from '@components/common/CollectionView.js';
@@ -21,50 +19,50 @@ import EditAmount from '@components/Acc/EditAmount.js';
 import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class AddNewAcc extends Component{
+class AddNewAcc extends Component {
 
   static defaultProps = {};
   static propTypes = {};
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       step: 1,
-    }
+    };
   }
 
   // componentWillMount(){ console.log('addAcc cwm'); }
 
-  render(){
+  render() {
     const { tid, travels, accountingMap } = this.props;
     const { step } = this.state;
-    return(
+    return (
       <View style={styles.container}>
-        <Divider subHeader="Title"/>
+        <Divider subHeader="Title" />
         <View style={styles.row}>
           <TextInput
             style={styles.textInput}
             placeholder="Insert accounting title"
             autoCorrect={false}
-            blurOnSubmit={true}
-            selectTextOnFocus={true}
+            blurOnSubmit
+            selectTextOnFocus
             autoCapitalize={'none'}
             underlineColorAndroid={'transparent'}
             clearButtonMode={'while-editing'}
-            onSubmitEditing={(event)=>{
-              let title = event.nativeEvent.text;
-              if(step === 1){
-                let size = this.props.accountingMap.size;
+            onSubmitEditing={(event) => {
+              const title = event.nativeEvent.text;
+              if (step === 1) {
+                const size = accountingMap.size;
                 this.aid = size.toString();
-                let aidAry = travels.get(tid).accounting;
+                const aidAry = travels.get(tid).accounting;
                 aidAry.push(this.aid);
                 this.props.dispatch(Actions.AddAccounting(this.aid, title));
                 this.props.dispatch(Actions.UpdAccountingList(tid, aidAry));
-                this.setState({step: 2})
+                this.setState({ step: 2 });
               }
-              else{
+              else {
                 this.props.dispatch(Actions.UpdAccountingTitle(this.aid, title));
               }
               // TODO: UpdACCList -> InitAcc (updTitle, UpdAmount=0)
@@ -82,27 +80,28 @@ class AddNewAcc extends Component{
     );
   }
 
-  renderStep = ()=>{
+  renderStep = () => {
     const { step } = this.state;
     // const { travels, dispatch } = this.props;
     // const travel = travels.get(this.tid);
-    if(!this.aid)
-      return;
+    if (!this.aid) {
+      return null;
+    }
 
     switch (step) {
       case 2:
-        return(
+        return (
           <EditNewAcc aid={this.aid} />
         );
-        break;
+      default:
+        return null;
 
     }
-    return;
   }
 
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { accountingMap } = state.accountingReducer;
   const { travels } = state.travelReducer;
   return {

@@ -1,49 +1,37 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
   TextInput,
-  Button,
   View,
   ScrollView,
-  Image,
-  TouchableHighlight,
   Dimensions,
 } from 'react-native';
 // helper
-import Constants from '@const'
-const {Colors, Size} = Constants;
+import Constants from '@const';
+const { Colors, Size } = Constants;
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
 import Divider from '@components/common/Divider.js';
 import AccountingList from '@components/Acc/AccountingList.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class TravelDetail extends Component{
+class TravelDetail extends Component {
 
   static propTypes = {
       tid: PropTypes.string.isRequired,
   };
 
-  constructor(props){
-    super(props);
-    // this.state = {
-    //   editName =
-    // }
-  }
-  componentWillUnmount(){
-    console.log('td cwunmount')
-  }
-  render(){
-    const {tid, travels, dispatch} = this.props;
+  // componentWillUnmount() { console.log('td cwunmount'); }
+
+  render() {
+    const { tid, travels, dispatch } = this.props;
     const travel = travels.get(tid);
 
-    return(
+    return (
       <ScrollView style={styles.container}>
-        <Divider subHeader="Title"/>
+        <Divider subHeader="Title" />
         <View style={[styles.row]}>
           {/* <Text style={styles.labelText}>Title</Text> */}
           <TextInput
@@ -51,12 +39,12 @@ class TravelDetail extends Component{
             value={travel.title}
             placeholder="Insert travel title"
             autoCorrect={false}
-            blurOnSubmit={true}
-            selectTextOnFocus={true}
+            blurOnSubmit
+            selectTextOnFocus
             autoCapitalize={'none'}
             underlineColorAndroid={'transparent'}
-            onChange={(event)=>{
-              let title = event.nativeEvent.text;
+            onChange={(event) => {
+              const title = event.nativeEvent.text;
               dispatch(Actions.UpdTravelTitle(tid, title));
             }}
           />
@@ -71,7 +59,7 @@ class TravelDetail extends Component{
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { travels } = state.travelReducer;
   return {
     travels,
@@ -80,7 +68,6 @@ function mapStateToProps(state){
 
 export default connect(mapStateToProps)(TravelDetail);
 
-const dividerHeight = 30;
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,28 +1,25 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
-  Text,
   View,
   ListView,
-  Dimensions
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import AccountingItem from '@components/Acc/AccountingItem.js';
 import Divider from '@components/common/Divider.js';
 
 import Constants from '@const'
-const {Colors, Size} = Constants;
+const { Colors, Size } = Constants;
 
-class AccountingList extends Component{
+class AccountingList extends Component {
   static propTypes = {
     tid: PropTypes.string.isRequired,
     aidAry: PropTypes.array.isRequired,
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
@@ -32,16 +29,16 @@ class AccountingList extends Component{
       dataSource: ds.cloneWithRowsAndSections({
         Accounting: this.gatheringData(props),
       }),
-    }
+    };
   }
-  gatheringData = (props)=>{
+  gatheringData = (props) => {
     const { aidAry, accountingMap } = props;
-    return ary = aidAry.map((aid)=>{
+    return ary = aidAry.map((aid) => {
       return accountingMap.get(aid);
     });
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.accountingMap != this.props.accountingMap){
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.accountingMap !== this.props.accountingMap) {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRowsAndSections({
           Accounting: this.gatheringData(nextProps),
@@ -50,22 +47,22 @@ class AccountingList extends Component{
     }
   }
 
-  render(){
+  render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'purple'}}>
+      <View style={{ flex: 1, backgroundColor: 'purple' }}>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
           renderSectionHeader={this._renderHeader}
           renderSeparator={this._renderSeparator}
           style={[styles.container]}
-          enableEmptySections={true}
+          enableEmptySections
           // {...this.props}
         />
       </View>
     );
   }
-  _renderRow = (accounting)=>{
+  _renderRow = (accounting) => {
     return(
       <AccountingItem
         aid={accounting.id}
@@ -75,13 +72,15 @@ class AccountingList extends Component{
   }
   _renderHeader = (sectionData, sectionID) => {
     return (
-      <Divider subHeader={sectionID}/>
+      <Divider subHeader={sectionID} />
     );
   }
+
   _renderSeparator = (sectionID, rowID) => {
-    if(rowID == this.props.aidAry.length-1)
-      return;
-    return(
+    if (rowID === this.props.aidAry.length - 1) {
+      return null;
+    }
+    return (
       <View
         key={`AL-${sectionID}-${rowID}`}
         style={{
@@ -94,7 +93,7 @@ class AccountingList extends Component{
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { accountingMap } = state.accountingReducer;
   return {
     accountingMap,

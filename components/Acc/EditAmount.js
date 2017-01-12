@@ -4,29 +4,25 @@ import {
   Text,
   TextInput,
   View,
-  Image,
-  TouchableHighlight,
 } from 'react-native';
 
 import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class EditAmount extends Component{
+class EditAmount extends Component {
   static defaultProps = {
-    callback: ()=>{},
+    callback: () => {},
   };
   static propTypes = {
     aid: PropTypes.string.isRequired,
   };
-  constructor(props){
-    super(props);
-  }
-  render(){
+
+  render() {
     const { aid, accountingMap, callback, dispatch } = this.props;
-    let accounting = accountingMap.get(aid);
-    return(
+    const accounting = accountingMap.get(aid);
+    return (
       <View style={styles.container}>
         <Divider />
         <View style={[styles.row]}>
@@ -36,12 +32,12 @@ class EditAmount extends Component{
             keyboardType="numeric"
             placeholder="insert amount"
             autoCorrect={false}
-            blurOnSubmit={true}
-            selectTextOnFocus={true}
+            blurOnSubmit
+            selectTextOnFocus
             autoCapitalize={'none'}
             underlineColorAndroid={'transparent'}
-            onSubmitEditing={(event)=>{
-              let amount = event.nativeEvent.text;
+            onSubmitEditing={(event) => {
+              const amount = event.nativeEvent.text;
               dispatch(Actions.UpdAccountingAmount(aid, amount));
               callback();
             }}
@@ -52,7 +48,7 @@ class EditAmount extends Component{
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { accountingMap } = state.accountingReducer;
 
   return {

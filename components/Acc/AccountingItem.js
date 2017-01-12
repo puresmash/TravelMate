@@ -1,17 +1,15 @@
 
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Image,
   TouchableHighlight
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import Constants from '@const'
-const {Colors, Size} = Constants;
+const { Colors, Size } = Constants;
 
 
 export default class AccountingItem extends Component{
@@ -21,21 +19,16 @@ export default class AccountingItem extends Component{
     accounting: PropTypes.object.isRequired,
   };
 
-  constructor(props){
-    super(props);
-    // console.log(typeof NavigatorHelper.getNav().pop);
-  }
   render(){
     const { aid, accounting } = this.props;
 
-    return(
-
+    return (
       // <Image
       //   source={require('../burger.png')}
       //   resizeMode='contain'
       //   style={{height: null, width: null, flex: 1}}
       // >
-      <TouchableHighlight onPress={()=>{
+      <TouchableHighlight onPress={() => {
         NavigatorHelper.push({
           key: 'AccountingDetail',
           title: 'AccountingDetail',
@@ -48,7 +41,7 @@ export default class AccountingItem extends Component{
           <Text style={styles.title}>{accounting.title}</Text>
           <Icon name="ios-arrow-forward"
             color={Colors.light0}
-            size={18}/>
+            size={18} />
         </View>
 
       </TouchableHighlight>

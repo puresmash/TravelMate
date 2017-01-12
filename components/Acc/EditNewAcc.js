@@ -1,13 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
-  Image,
-  TouchableHighlight,
 } from 'react-native';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 import CollectionView from '@components/common/CollectionView.js';
 import EditPayment from '@components/Acc/EditPayment.js';
@@ -16,25 +14,24 @@ import EditAmount from '@components/Acc/EditAmount.js';
 import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class EditNewAcc extends Component{
+class EditNewAcc extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-
     this.state = {
       step: 'payment',
-    }
+    };
   }
 
-  render(){
-    const { aid, accountingMap, users } = this.props;
-    let accounting = accountingMap.get(this.props.aid);
-    let payment = accounting ? accounting.payment : '';
-    let credit = accounting ? accounting.credit : '';
-    let amount = accounting ? accounting.amount.toString() : '';
-    return(
+  render() {
+    const { aid, accountingMap } = this.props;
+    const accounting = accountingMap.get(aid);
+    const payment = accounting ? accounting.payment : '';
+    const credit = accounting ? accounting.credit : '';
+    const amount = accounting ? accounting.amount.toString() : '';
+    return (
       <ScrollView style={styles.container}>
         <View style={styles.row}>
           <Text style={styles.labelText}>Payment</Text>
@@ -48,69 +45,68 @@ class EditNewAcc extends Component{
           <Text style={styles.labelText}>Credit</Text>
           <Text>{this.getMultiUserName(credit)}</Text>
         </View>
-        <Divider subHeader={this.state.step}/>
+        <Divider subHeader={this.state.step} />
         {this.renderEditor()}
       </ScrollView>
     );
   }
 
-  renderEditor = ()=> {
-    const {step} = this.state;
-    switch(step){
+  renderEditor = () => {
+    const { step } = this.state;
+    switch (step) {
       case 'payment':
         return (
           <EditPayment
             // style={styles.container}
             aid={this.props.aid}
-            style={{marginTop: 0, paddingTop: 8}}
-            callback={()=>{
-              this.setState({step: 'amount'});
+            style={{ marginTop: 0, paddingTop: 8 }}
+            callback={() => {
+              this.setState({ step: 'amount' });
             }}
           />
         );
-        break;
+
       case 'amount':
-        return(
+        return (
           <EditAmount
             aid={this.props.aid}
-            callback={()=>{
-              this.setState({step: 'credit'});
+            callback={() => {
+              this.setState({ step: 'credit' });
             }}
           />
         );
-        break;
+
       case 'credit':
-        return(
+        return (
           <EditCredit
             aid={this.props.aid}
-            style={{marginTop: 0, paddingTop: 8}}
+            style={{ marginTop: 0, paddingTop: 8 }}
           />
         );
-        break;
     }
 
   }
 
-  getMultiUserName = (idAry)=>{
-    if(!idAry)
+  getMultiUserName = (idAry) => {
+    if (!idAry) {
       return '';
+    }
 
-    let nameAry = idAry.map((id)=>{
-      return this.getUserName(id)
-    });
+    const nameAry = idAry.map((id) => this.getUserName(id));
     return nameAry.join(', ');
   }
 
-  getUserName = (id)=>{
-    if(id == null || id === '')
+  getUserName = (id) => {
+    if (id == null || id === '') {
       return '';
-    const {users} = this.props;
+    }
+    const { users } = this.props;
     return users.get(id).name;
   }
 
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { users } = state.userReducer;
   const { accountingMap } = state.accountingReducer;
   const { travels } = state.travelReducer;

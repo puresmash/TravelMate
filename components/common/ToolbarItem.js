@@ -1,38 +1,39 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Image,
-  ListView,
   TouchableHighlight,
   ScrollView,
-  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 
-export default class Toolbar extends Component{
+export default class Toolbar extends Component {
   static propTypes = {
 
   };
   static defaultProps = {
     active: false,
     page: -1,
-    goToPage: ()=>{},
+    goToPage: () => {},
   };
-  constructor(props){
-    super(props);
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.active !== this.props.active) {
+      if (nextProps.active && nextProps.title) {
+        NavigatorHelper.replaceCurrentTitle(nextProps.title);
+      }
+    }
   }
 
-  renderChild = ()=>{
+  renderChild = () => {
     let itemProps = {
-      style: {color: this.props.activeColor},
-    }
+      style: { color: this.props.activeColor },
+    };
     // console.log('GOGOGOGO'+activeColor)
-    return this.props.children.map((child, index)=>{
-      if(this.props.active !== true){
+    return this.props.children.map((child, index) => {
+      if (this.props.active !== true) {
         return child;
       }
       itemProps.key = `TIC-${index}`;
@@ -40,23 +41,16 @@ export default class Toolbar extends Component{
     });
   }
 
-  componentWillReceiveProps(nextProps){
-    if(nextProps.active != this.props.active){
-      if(nextProps.active && nextProps.title)
-        NavigatorHelper.replaceCurrentTitle(nextProps.title);
-    }
-  }
-
-  render(){
-    let { active, activeColor, pageIndex, goToPage } = this.props;
-    const color = active ? {color: activeColor}:{}
-    return(
+  render() {
+    const { active, activeColor, pageIndex, goToPage } = this.props;
+    const color = active ? { color: activeColor } : {};
+    return (
       <TouchableHighlight
-        style={{flex: 1}}
-        onPress={()=>{
+        style={{ flex: 1 }}
+        onPress={() => {
           goToPage(pageIndex);
       }}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center' }}>
           {this.props.icon &&
             <Icon
               name={this.props.icon}
@@ -71,12 +65,12 @@ export default class Toolbar extends Component{
       </TouchableHighlight>
     );
   }
-  renderScrollableContent = ()=>{
-    return this.props.children.map((child)=>{
-      if(child.type === ScrollView){
+  renderScrollableContent = () => {
+    return this.props.children.map((child) => {
+      if (child.type === ScrollView) {
         return child;
       }
-    })
+    });
   }
 }
 
