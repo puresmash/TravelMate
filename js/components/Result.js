@@ -22,7 +22,7 @@ class Result extends Component {
     const ary = this.getAccList();
     return (
       <View>
-        <Divider subHeader="Result List"/>
+        <Divider subHeader="Result List" />
         <ScrollView style={styles.container}>
           {ary}
         </ScrollView>

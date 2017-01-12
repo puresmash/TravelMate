@@ -48,8 +48,7 @@ class AddNewTravel extends Component {
                 this.tid = size.toString();
                 this.props.dispatch(Actions.AddTravel(this.tid, title));
                 this.setState({ step: 2 });
-              }
-              else {
+              } else {
                 this.props.dispatch(Actions.UpdTravelTitle(this.tid, title));
               }
             }}

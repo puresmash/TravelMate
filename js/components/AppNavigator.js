@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -6,7 +6,7 @@ import {
   Navigator,
   Platform,
   AppState,
-} from 'react-native'
+} from 'react-native';
 
 // import { createStore, applyMiddleware, combineReducers } from 'redux';
 // import { Provider } from 'react-redux';
@@ -56,9 +56,9 @@ import EditUser from '@components/User/EditUser.js';
 // utils
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import EmitterUtils from '@utils/EmitterUtils.js'
-import Data from '../testdata.json';
+import Data from '../../testdata.json';
 import Constants from '@const';
-const {Colors} = Constants;
+const { Colors } = Constants;
 const routes = [
   { key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser' }
 ];
@@ -172,7 +172,7 @@ export default class AppNavigator extends Component {
         return <HomeTabView />;
 
       case 'TravelTabView' :
-        return <TravelTabView tid={route.tid} travel={route.travel} />;
+        return <TravelTabView tid={route.tid} />;
 
       case 'AccountingDetail':
         return <AccountingDetail tid={route.tid} aid={route.aid} />;

@@ -1,51 +1,45 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   TextInput,
   View,
-  TouchableHighlight,
   Dimensions,
   Platform,
 } from 'react-native';
 // helper
-import Constants from '@const'
-const {Colors, Size} = Constants;
+import Constants from '@const';
+const { Colors, Size } = Constants;
 // components
 import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class EditUser extends Component{
+class EditUser extends Component {
 
   static defaultProps = {};
   static propTypes = {
     uid: PropTypes.string.isRequired,
   };
 
-  constructor(props){
-    super(props);
-  }
-
-  render(){
+  render() {
     const { uid, users } = this.props;
     const user = users.get(uid);
 
-    return(
+    return (
       <View style={styles.container}>
-        <Divider subHeader="Name"/>
+        <Divider subHeader="Name" />
         <View style={styles.row}>
           <TextInput
             style={styles.textInput}
             placeholder="Insert user name"
             autoCorrect={false}
-            blurOnSubmit={true}
-            selectTextOnFocus={true}
+            blurOnSubmit
+            selectTextOnFocus
             autoCapitalize={'none'}
             underlineColorAndroid={'transparent'}
             value={user.name}
-            onChange={(e)=>{
+            onChange={(e) => {
               const name = e.nativeEvent.text;
               this.props.dispatch(Actions.UpdUserName(uid, name));
             }}
@@ -56,7 +50,7 @@ class EditUser extends Component{
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { users } = state.userReducer;
   return {
     users,

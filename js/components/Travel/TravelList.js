@@ -100,7 +100,7 @@ class TravelList extends Component {
     );
   }
   _renderRow = (travel, sectionID, rowID) => {
-    console.log(`render row ${rowID}: ${travel.title}`)
+    console.log(`render row ${rowID}: ${travel.title}`);
     return (
       <TravelItem
         tid={travel.id}

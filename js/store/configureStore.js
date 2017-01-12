@@ -1,8 +1,9 @@
 
 import { AsyncStorage } from 'react-native';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { getStoredState, persistStore, autoRehydrate } from 'redux-persist';
+import { persistStore, autoRehydrate } from 'redux-persist';
 import thunk from 'redux-thunk';
+
 import * as reducers from '@reducers';
 const reducer = combineReducers(reducers);
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;

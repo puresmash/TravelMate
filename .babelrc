@@ -2,12 +2,12 @@
   "presets": ["react-native"],
   "plugins": [
     ["module-alias", [
-        { "src": "./components", "expose": "@components" },
-        { "src": "./constants", "expose": "@const" },
-        { "src": "./utils", "expose": "@utils" },
-        { "src": "./actions", "expose": "@actions" },
-        { "src": "./reducers", "expose": "@reducers" },
-        { "src": "./images", "expose": "@images" },
+        { "src": "./js/components", "expose": "@components" },
+        { "src": "./js/constants", "expose": "@const" },
+        { "src": "./js/utils", "expose": "@utils" },
+        { "src": "./js/actions", "expose": "@actions" },
+        { "src": "./js/reducers", "expose": "@reducers" },
+        { "src": "./js/images", "expose": "@images" },
     ]]
   ]
 

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
+// import {
+//   StyleSheet,
+// } from 'react-native';
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
 import Divider from '@components/common/Divider.js';
@@ -20,17 +20,16 @@ export default class TravelTabView extends Component {
 
   static propTypes = {
       tid: PropTypes.string.isRequired,
-      travel: PropTypes.object.isRequired,
   };
 
   componentDidMount() {
-    EmitterUtils.on('TravelTabView', () => {
-      console.log('!!!!!!!aloha aloha');
-    });
+    // EmitterUtils.on('TravelTabView', () => {
+    //   console.log('!!!!!!!aloha aloha');
+    // });
   }
 
   render() {
-    const { tid, travel } = this.props;
+    const { tid } = this.props;
 
     return (
 
@@ -62,19 +61,19 @@ export default class TravelTabView extends Component {
     );
   }
 }
-const rowHeight = 48;
-const rowPadding = 15;
-const styles = StyleSheet.create({
-  row: {
-    padding: rowPadding,
-    height: rowHeight,
-    flexDirection: 'row',
-    borderColor: '#CCCCCC',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  labelText: {
-    flex: 1,
-  },
-});
+// const rowHeight = 48;
+// const rowPadding = 15;
+// const styles = StyleSheet.create({
+//   row: {
+//     padding: rowPadding,
+//     height: rowHeight,
+//     flexDirection: 'row',
+//     borderColor: '#CCCCCC',
+//     borderBottomWidth: 1,
+//     borderTopWidth: 1,
+//     backgroundColor: '#FFFFFF',
+//   },
+//   labelText: {
+//     flex: 1,
+//   },
+// });

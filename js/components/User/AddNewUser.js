@@ -1,51 +1,49 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
   TextInput,
   View,
-  TouchableHighlight,
   Dimensions,
   Platform,
 } from 'react-native';
 // helper
-import Constants from '@const'
-const {Colors, Size} = Constants;
+import Constants from '@const';
+const { Colors, Size } = Constants;
 // components
 import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-class AddNewUser extends Component{
+class AddNewUser extends Component {
 
   static defaultProps = {};
   static propTypes = {};
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       step: 1,
-    }
+    };
   }
 
-  render(){
+  render() {
     const { users } = this.props;
     const { step } = this.state;
-    return(
+    return (
       <View style={styles.container}>
-          <Divider subHeader="Name"/>
+          <Divider subHeader="Name" />
           <View style={styles.row}>
             <TextInput
               style={styles.textInput}
               placeholder="Insert user name"
               autoCorrect={false}
-              blurOnSubmit={true}
-              selectTextOnFocus={true}
+              blurOnSubmit
+              selectTextOnFocus
               autoCapitalize={'none'}
               underlineColorAndroid={'transparent'}
               clearButtonMode={'while-editing'}
-              onSubmitEditing={(e)=>{
+              onSubmitEditing={(e) => {
                 const name = e.nativeEvent.text;
                 const size = this.props.users.size;
                 this.uid = size.toString();
@@ -64,24 +62,26 @@ class AddNewUser extends Component{
     );
   }
 
-  renderStep = ()=>{
+  renderStep = () => {
     const { step } = this.state;
-    if(!this.uid)
-      return;
-    switch(step) {
+    if (!this.uid) {
+      return null;
+    }
+    switch (step) {
       case 2:
         return (
           <View style={styles.row}>
             <TextInput />
           </View>
         );
-        break;
+      default:
+        return null;
     }
   }
 
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   const { users } = state.userReducer;
   return {
     users,

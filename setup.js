@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
-import AppNavigator from './components/AppNavigator.js';
+import configureStore from './js/store/configureStore';
+import AppNavigator from '@components/AppNavigator.js';
 // import Data from './testdata.json';
 
 function setup() {
