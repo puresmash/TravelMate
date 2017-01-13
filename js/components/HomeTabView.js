@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import {} from 'react-native';
 // components
-import TabView from '@components/common/TabView.js';
-import Toolbar from '@components/common/Toolbar.js';
-import ToolbarItem from '@components/common/ToolbarItem.js';
+import { TabView, Toolbar, ToolbarItem } from '@components/common';
 import TravelList from '@components/Travel/TravelList.js';
 import AddNewTravel from '@components/Travel/AddNewTravel.js';
 import UserList from '@components/User/UserList.js';

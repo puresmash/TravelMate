@@ -152,7 +152,8 @@ export default class AppNavigator extends Component {
               flex: 1,
               flexDirection: 'row',
               backgroundColor: 'orange',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              position: 'absolute'
             }}
           />
         }
