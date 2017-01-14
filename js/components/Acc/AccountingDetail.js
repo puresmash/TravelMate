@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
-  TextInput,
   View,
   TouchableHighlight,
   Platform,
@@ -10,7 +9,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons'
 import NavigatorHelper from '@utils/NavigatorHelper.js';
-import Divider from '@components/common/Divider.js';
+import { Divider, Input } from '@components/common';
 import Constants from '@const'
 const { Colors, Size } = Constants;
 // dispatch
@@ -32,42 +31,26 @@ class AccountingDetail extends Component {
 
     return (
       <View style={styles.container}>
-
         <Divider />
-        <View style={[styles.row]}>
-          <Text style={styles.labelText}>Title</Text>
-          <TextInput
-            style={styles.textInput}
-            value={accounting.title}
-            autoCorrect={false}
-            blurOnSubmit
-            selectTextOnFocus
-            autoCapitalize={'none'}
-            underlineColorAndroid={'transparent'}
-            onChange={(event) => {
-              const title = event.nativeEvent.text;
-              dispatch(Actions.UpdAccountingTitle(aid, title));
-            }}
-          />
-        </View>
-
+        <Input
+          label={'Title'}
+          value={accounting.title}
+          placeholder="Dinner Bill"
+          onChange={(event) => {
+            const title = event.nativeEvent.text;
+            dispatch(Actions.UpdAccountingTitle(aid, title));
+          }}
+        />
         <Divider subHeader="Datail" />
-        <View style={styles.row}>
-          <Text style={styles.labelText}>Date</Text>
-          <TextInput
-            style={styles.textInput}
-            value={accounting.date}
-            autoCorrect={false}
-            blurOnSubmit
-            selectTextOnFocus
-            autoCapitalize={'none'}
-            underlineColorAndroid={'transparent'}
-            onChange={(event) => {
-              const date = event.nativeEvent.text;
-              dispatch(Actions.UpdAccountingDate(aid, date));
-            }}
-          />
-        </View>
+        <Input
+          label={'Date'}
+          value={accounting.date}
+          placeholder={'2016.01.01'}
+          onChange={(event) => {
+            const date = event.nativeEvent.text;
+            dispatch(Actions.UpdAccountingDate(aid, date));
+          }}
+        />
 
         <TouchableHighlight onPress={() => {
           NavigatorHelper.push({
@@ -86,24 +69,17 @@ class AccountingDetail extends Component {
               size={18} />
           </View>
         </TouchableHighlight>
-
-        <View style={styles.row}>
-          <Text style={styles.labelText}>Amount</Text>
-          <TextInput
-            style={styles.textInput}
-            value={amount}
-            autoCorrect={false}
-            blurOnSubmit
-            selectTextOnFocus
-            autoCapitalize={'none'}
-            underlineColorAndroid={'transparent'}
-            onChange={(event) => {
-              const newAmount = event.nativeEvent.text;
-              dispatch(Actions.UpdAccountingAmount(aid, newAmount));
-            }}
-          />
-        </View>
-
+        <Input
+          label={'Amount'}
+          value={amount}
+          placeholder={'500'}
+          keyboardType={'numeric'}
+          containerStyle={{ borderTopWidth: 0 }}
+          onChange={(event) => {
+            const newAmount = event.nativeEvent.text;
+            dispatch(Actions.UpdAccountingAmount(aid, newAmount));
+          }}
+        />
         <TouchableHighlight onPress={() => {
           NavigatorHelper.push({
             key: 'EditCredit',
@@ -162,7 +138,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderColor: '#CCCCCC',
     borderBottomWidth: 1,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
     backgroundColor: '#FFFFFF',
   },
   divider: {
@@ -171,14 +147,6 @@ const styles = StyleSheet.create({
   },
   labelText: {
     flex: 1,
-  },
-  textInput: {
-    flex: 1,
-    textAlign: 'right',
-    color: Colors.black54,
-    // necessary
-    height: rowHeight,
-    alignSelf: 'center',
   },
   limitText: {
     maxWidth: 150,

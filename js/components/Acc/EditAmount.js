@@ -1,12 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  Text,
-  TextInput,
   View,
 } from 'react-native';
 
-import Divider from '@components/common/Divider.js';
+import { Divider, Input } from '@components/common/';
 // dispatch
 import Actions from '@actions';
 import { connect } from 'react-redux';
@@ -25,24 +23,16 @@ class EditAmount extends Component {
     return (
       <View style={styles.container}>
         <Divider />
-        <View style={[styles.row]}>
-          <Text style={styles.labelText}>Amount</Text>
-          <TextInput
-            style={styles.textInput}
-            keyboardType="numeric"
-            placeholder="insert amount"
-            autoCorrect={false}
-            blurOnSubmit
-            selectTextOnFocus
-            autoCapitalize={'none'}
-            underlineColorAndroid={'transparent'}
-            onSubmitEditing={(event) => {
-              const amount = event.nativeEvent.text;
-              dispatch(Actions.UpdAccountingAmount(aid, amount));
-              callback();
-            }}
-          />
-        </View>
+        <Input
+          label={'Amount'}
+          placeholder={'500'}
+          keyboardType={'numeric'}
+          onSubmitEditing={(event) => {
+            const amount = event.nativeEvent.text;
+            dispatch(Actions.UpdAccountingAmount(aid, amount));
+            callback();
+          }}
+        />
       </View>
     );
   }
@@ -76,9 +66,5 @@ const styles = StyleSheet.create({
   },
   labelText: {
     flex: 1,
-  },
-  textInput: {
-    flex: 1,
-    // textAlign: 'right',
   },
 });

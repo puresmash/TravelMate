@@ -68,7 +68,7 @@ class UserList extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#DDDDDD' }}>
+      <View style={{ flex: 1, backgroundColor: '#FFF' }}>
         <ListView
           style={styles.container}
           dataSource={this.state.dataSource}
@@ -103,14 +103,17 @@ class UserList extends Component {
 
   _renderHeader = (sectionData, sectionID) => {
     return (
-      <Divider subHeader={sectionID} />
+      <View style={{ borderColor: Colors.divider, borderBottomWidth: 1 }}>
+        <Divider subHeader={sectionID} />
+      </View>
     );
   }
 
   _renderSeparator = (sectionID, rowID) => {
-    if (rowID === this.props.users.size - 1) {
-      return null;
-    }
+    // rowID is a string
+    // if (rowID == this.props.users.size - 1) {
+    //   return null;
+    // }
     // console.log(`${sectionID}-${rowID}`)
     return (
       <View
@@ -118,7 +121,7 @@ class UserList extends Component {
         style={{
           height: 1,
           backgroundColor: Colors.divider,
-          marginLeft: Size.rowPadding,
+          // marginLeft: Size.rowPadding,
         }}
       />
     );
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     borderColor: Colors.divider,
     borderBottomWidth: 1,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
   },
   listview: { },
   row: {

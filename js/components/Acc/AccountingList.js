@@ -49,7 +49,7 @@ class AccountingList extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: 'purple' }}>
+      <View style={{ flex: 1 }}>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
@@ -63,21 +63,25 @@ class AccountingList extends Component {
     );
   }
   _renderRow = (accounting) => {
-    return(
+    return (
       <AccountingItem
         aid={accounting.id}
         accounting={accounting}
       />
     );
   }
+
   _renderHeader = (sectionData, sectionID) => {
     return (
-      <Divider subHeader={sectionID} />
+      <View style={{ borderColor: Colors.divider, borderBottomWidth: 1 }}>
+        <Divider subHeader={sectionID} />
+      </View>
     );
   }
 
   _renderSeparator = (sectionID, rowID) => {
-    if (rowID === this.props.aidAry.length - 1) {
+    // rowID is a string
+    if (rowID == this.props.aidAry.length - 1) {
       return null;
     }
     return (
@@ -111,9 +115,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // width: Dimensions.get('window').width,
-    backgroundColor: '#DDDDDD',
+    backgroundColor: '#FFF',
     borderColor: Colors.divider,
     borderBottomWidth: 1,
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
   },
 });

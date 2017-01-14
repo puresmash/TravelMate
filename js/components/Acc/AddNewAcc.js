@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  TextInput,
   View,
   Dimensions,
 } from 'react-native';
@@ -11,12 +10,11 @@ import Constants from '@const'
 const { Colors, Size } = Constants;
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
-import CollectionView from '@components/common/CollectionView.js';
+import {Divider, CollectionView, Input} from '@components/common';
 import EditNewAcc from '@components/Acc/EditNewAcc.js';
 import EditPayment from '@components/Acc/EditPayment.js';
 import EditCredit from '@components/Acc/EditCredit.js';
 import EditAmount from '@components/Acc/EditAmount.js';
-import Divider from '@components/common/Divider.js';
 // dispatch
 import Actions from '@actions';
 import { connect } from 'react-redux';
@@ -40,41 +38,25 @@ class AddNewAcc extends Component {
     const { step } = this.state;
     return (
       <View style={styles.container}>
-        <Divider subHeader="Title" />
-        <View style={styles.row}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Insert accounting title"
-            autoCorrect={false}
-            blurOnSubmit
-            selectTextOnFocus
-            autoCapitalize={'none'}
-            underlineColorAndroid={'transparent'}
-            clearButtonMode={'while-editing'}
-            onSubmitEditing={(event) => {
-              const title = event.nativeEvent.text;
-              if (step === 1) {
-                const size = accountingMap.size;
-                this.aid = size.toString();
-                const aidAry = travels.get(tid).accounting;
-                aidAry.push(this.aid);
-                this.props.dispatch(Actions.AddAccounting(this.aid, title));
-                this.props.dispatch(Actions.UpdAccountingList(tid, aidAry));
-                this.setState({ step: 2 });
-              }
-              else {
-                this.props.dispatch(Actions.UpdAccountingTitle(this.aid, title));
-              }
-              // TODO: UpdACCList -> InitAcc (updTitle, UpdAmount=0)
-              // NavigatorHelper.push({
-              //   key: 'EditNewAcc',
-              //   title: 'EditNewAcc',
-              //   aid: this.aid,
-              //   index: 2
-              // })
-            }}
-          />
-        </View>
+        <Divider subHeader="New accounting" />
+        <Input
+          label={'Title'}
+          placeholder="Dinner Bill"
+          onSubmitEditing={(event) => {
+            const title = event.nativeEvent.text;
+            if (step === 1) {
+              const size = accountingMap.size;
+              this.aid = size.toString();
+              const aidAry = travels.get(tid).accounting;
+              aidAry.push(this.aid);
+              this.props.dispatch(Actions.AddAccounting(this.aid, title));
+              this.props.dispatch(Actions.UpdAccountingList(tid, aidAry));
+              this.setState({ step: 2 });
+            } else {
+              this.props.dispatch(Actions.UpdAccountingTitle(this.aid, title));
+            }
+          }}
+        />
         {this.renderStep()}
       </View>
     );
@@ -130,10 +112,4 @@ const styles = StyleSheet.create({
   labelText: {
     flex: 1,
   },
-  textInput: {
-    flex: 1,
-    color: Colors.black54,
-    height: Size.rowHeight,
-    alignSelf: 'center',
-  }
 });

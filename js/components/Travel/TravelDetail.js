@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
-  TextInput,
   View,
   ScrollView,
   Dimensions,
@@ -11,7 +10,7 @@ import Constants from '@const';
 const { Colors, Size } = Constants;
 import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
-import Divider from '@components/common/Divider.js';
+import { Divider, Input } from '@components/common';
 import AccountingList from '@components/Acc/AccountingList.js';
 // dispatch
 import Actions from '@actions';
@@ -31,25 +30,16 @@ class TravelDetail extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        <Divider subHeader="Title" />
-        <View style={[styles.row]}>
-          {/* <Text style={styles.labelText}>Title</Text> */}
-          <TextInput
-            style={styles.textInput}
-            value={travel.title}
-            placeholder="Insert travel title"
-            autoCorrect={false}
-            blurOnSubmit
-            selectTextOnFocus
-            autoCapitalize={'none'}
-            underlineColorAndroid={'transparent'}
-            onChange={(event) => {
-              const title = event.nativeEvent.text;
-              dispatch(Actions.UpdTravelTitle(tid, title));
-            }}
-          />
-        </View>
-
+        <Divider subHeader="Travel Title" />
+        <Input
+          label={'Title'}
+          value={travel.title}
+          placeholder={'Taiwan 2016'}
+          onChange={(event) => {
+            const title = event.nativeEvent.text;
+            dispatch(Actions.UpdTravelTitle(tid, title));
+          }}
+        />
         <AccountingList
           tid={tid}
           aidAry={travel.accounting}
@@ -81,18 +71,9 @@ const styles = StyleSheet.create({
     height: Size.rowHeight,
     flexDirection: 'row',
     borderColor: '#CCCCCC',
-    borderTopWidth: 1,
+    // borderTopWidth: 1,
     // borderBottomWidth: 1,
     backgroundColor: '#FFFFFF',
   },
-  labelText: {
-    flex: 1,
-  },
-  textInput: {
-    flex: 1,
-    // textAlign: 'right',
-    color: Colors.black54,
-    height: Size.rowHeight,
-    alignSelf: 'center',
-  }
+
 });
