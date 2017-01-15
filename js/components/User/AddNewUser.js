@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {
   StyleSheet,
   View,
+  Button,
   Dimensions,
   Platform,
 } from 'react-native';
@@ -23,36 +24,55 @@ class AddNewUser extends Component {
     super(props);
     this.state = {
       step: 1,
+      uid: props.users.size.toString(),
+      name: '',
+      warning: false,
     };
   }
 
   render() {
     const { users } = this.props;
-    const { step } = this.state;
+    const { name, warning } = this.state;
     return (
       <View style={styles.container}>
           <Divider subHeader="New Member" />
           <Input
             label={'Name'}
+            value={name}
             placeholder={'Member Name'}
-            onSubmitEditing={(e) => {
-              const name = e.nativeEvent.text;
-              const size = this.props.users.size;
-              this.uid = size.toString();
-              // if(step === 1){
-              this.props.dispatch(Actions.AddUser(this.uid, name));
-              //   this.setState({step: 2});
-              // }
-              // else{
-              //   this.props.dispatch(Actions.UpdUserName(this.uid, name));
-              // }
+            warning={warning}
+            onChangeText={(text) => {
+              this.setState({ name: text });
             }}
           />
+          {this.renderButton()}
           {this.renderStep()}
       </View>
     );
   }
+  renderButton = () => {
+    if (this.state.step === 1) {
+      return (
+        <Button
+          onPress={this.addNewUser}
+          title={'Confirm'}
+          color={'#007aff'}
+        />
+      );
+    }
+    return null;
+  }
+  addNewUser = () => {
+    const { uid, name } = this.state;
+    if (!name) {
+      this.setState({ warning: true });
+      return;
+    }
+    this.setState({ warning: false });
 
+    this.props.dispatch(Actions.AddUser(this.uid, name));
+    this.setState({ step: 2 });
+  }
   renderStep = () => {
     const { step } = this.state;
     if (!this.uid) {

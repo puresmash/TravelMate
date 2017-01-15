@@ -11,7 +11,7 @@ import {
 // dispatch
 import { connect } from 'react-redux';
 // components
-import { Divider, ZoomRow } from '@components/common';
+import { Divider, ZoomRow, IconRow } from '@components/common';
 // helper
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import EmitterUtils from '@utils/EmitterUtils.js';
@@ -76,6 +76,7 @@ class UserList extends Component {
           renderSeparator={this._renderSeparator}
           renderSectionHeader={this._renderHeader}
           enableEmptySections
+          removeClippedSubviews={false}
         />
       </View>
     );
@@ -103,8 +104,20 @@ class UserList extends Component {
 
   _renderHeader = (sectionData, sectionID) => {
     return (
-      <View style={{ borderColor: Colors.divider, borderBottomWidth: 1 }}>
+      <View>
         <Divider subHeader={sectionID} />
+        <IconRow
+          label={'Push to add new user...'}
+          containerStyle={{ borderWidth: 1, elevation: 1 }}
+          backgroundColor={Colors.orange200}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'AddNewUser',
+              title: 'AddNewUser',
+              index: 1
+            });
+          }}
+        />
       </View>
     );
   }

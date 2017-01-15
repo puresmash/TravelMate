@@ -13,19 +13,19 @@ export default class Home extends Component {
       <TabView>
         {/* items here must set {width: Dimensions.get('window').width} */}
         <TravelList page={1} />
-        <AddNewTravel page={2} />
-        <UserList page={3} />
+        {/* <AddNewTravel page={2} /> */}
+        <UserList page={2} />
         <Toolbar>
           <ToolbarItem
             icon="ios-list-box"
             text="List"
             title="Travel List"
           />
-          <ToolbarItem
+          {/* <ToolbarItem
             icon="ios-color-wand-outline"
             text="New"
             title="Add New Travel"
-          />
+          /> */}
           <ToolbarItem
             icon="ios-contacts-outline"
             text="Member"

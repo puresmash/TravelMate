@@ -39,7 +39,6 @@ class AddNewAcc extends Component {
     return (
       <View style={styles.container}>
         <Divider subHeader="New accounting" />
-
         <Input
           label={'Title'}
           value={title}
@@ -75,7 +74,7 @@ class AddNewAcc extends Component {
     const { aid, title } = this.state;
     if (!title) {
       this.setState({ warning: true });
-      return null;
+      return;
     }
     this.setState({ warning: false });
 
@@ -127,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: Dimensions.get('window').width,
     marginTop: Platform.OS === 'ios' ? 64 : 56,
-    backgroundColor: '#DDDDDD',
+    backgroundColor: Colors.light0,
   },
   row: {
     // width: Dimensions.get('window').width,

@@ -36,11 +36,17 @@ class TravelList extends Component {
     };
   }
 
-  // componentWillMount(){ console.log('cwm'); }
+  // componentWillMount() {
+  //
+  // }
 
   componentDidMount() {
-    this.subscription = EmitterUtils.on('TravelList', () => {
-      console.log('RightButton Click');
+    this.subscription = EmitterUtils.on('AddNewTravel', () => {
+      NavigatorHelper.push({
+        key: 'AddNewTravel',
+        title: 'AddNewTravel',
+        index: 1
+      });
     });
   }
 

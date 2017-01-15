@@ -12,7 +12,6 @@ import Constants from '@const';
 const { Colors, Size } = Constants;
 
 const ZoomRow = ({ label, value, onPress, containerStyle, labelStyle }) => {
-
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={[styles.container, containerStyle]}>

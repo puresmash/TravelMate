@@ -61,7 +61,7 @@ import Data from '../../testdata.json';
 import Constants from '@const';
 const { Colors } = Constants;
 const routes = [
-  { key: 'Home', title: 'Travel List', index: 0, right: 'AddNewUser' }
+  { key: 'Home', title: 'Travel List', index: 0, right: 'AddNewTravel' }
 ];
 
 export default class AppNavigator extends Component {
@@ -138,7 +138,7 @@ export default class AppNavigator extends Component {
                   return null;
                 }
 
-                const btnRight = <NavButton target={route.right} text={'+User'} />;
+                const btnRight = <NavButton target={route.right} text={'+Travel'} />;
                 return btnRight;
               },
               Title: (route, navigator, index, navState) => {
@@ -193,6 +193,9 @@ export default class AppNavigator extends Component {
 
       case 'AddNewAcc':
         return <AddNewAcc tid={route.tid} />;
+
+      case 'AddNewTravel':
+        return <AddNewTravel />;
 
       default:
         return null;
