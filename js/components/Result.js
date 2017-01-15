@@ -9,7 +9,7 @@ import {
 // dispatch
 import { connect } from 'react-redux';
 // components
-import Divider from '@components/common/Divider.js';
+import { Divider, ZoomRow } from '@components/common';
 // helper
 import TransUtils from '@utils/TransUtils.js';
 
@@ -70,10 +70,11 @@ class Result extends Component {
     const { users } = this.props;
     const name = users.get(uid).name;
     return (
-      <View key={uid} style={styles.row}>
-        <Text style={styles.labelText}>{name}</Text>
-        <Text style={styles.valueText}>{value}</Text>
-      </View>
+      <ZoomRow
+        key={uid}
+        label={name}
+        value={value}
+      />
     );
   }
 }

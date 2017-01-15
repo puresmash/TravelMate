@@ -23,12 +23,16 @@ const ZoomRow = ({ label, value, onPress, containerStyle }) => {
         >
           {value}
         </Text>
-        <Icon
-          name="ios-arrow-forward"
-          color={Colors.light0}
-          style={{ marginLeft: 8 }}
-          size={18}
-        />
+        {
+          // If onPress is undefined, Icon won't be rendered
+          onPress &&
+          <Icon
+            name="ios-arrow-forward"
+            color={Colors.light0}
+            style={{ marginLeft: 8 }}
+            size={18}
+          />
+        }
       </View>
     </TouchableHighlight>
   );

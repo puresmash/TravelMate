@@ -1,16 +1,8 @@
 
 import React, { Component, PropTypes } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableHighlight
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
-import NavigatorHelper from '@utils/NavigatorHelper.js'
-import Constants from '@const'
-const { Colors, Size } = Constants;
 
+import NavigatorHelper from '@utils/NavigatorHelper.js'
+import { ZoomRow } from '@components/common';
 
 export default class AccountingItem extends Component{
 
@@ -19,57 +11,22 @@ export default class AccountingItem extends Component{
     accounting: PropTypes.object.isRequired,
   };
 
-  render(){
+  render() {
     const { aid, accounting } = this.props;
 
     return (
-      // <Image
-      //   source={require('../burger.png')}
-      //   resizeMode='contain'
-      //   style={{height: null, width: null, flex: 1}}
-      // >
-      <TouchableHighlight onPress={() => {
-        NavigatorHelper.push({
-          key: 'AccountingDetail',
-          title: 'AccountingDetail',
-          aid,
-          index: 2
-        });
-      }}>
-
-        <View style={styles.row}>
-          <Text style={styles.title}>{accounting.title}</Text>
-          <Icon name="ios-arrow-forward"
-            color={Colors.light0}
-            size={18} />
-        </View>
-
-      </TouchableHighlight>
-
+      <ZoomRow
+        label={accounting.title}
+        containerStyle={{ borderBottomWidth: 0 }}
+        onPress={() => {
+          NavigatorHelper.push({
+            key: 'AccountingDetail',
+            title: 'AccountingDetail',
+            aid,
+            index: 2
+          });
+        }}
+      />
     );
   }
 }
-
-const rowHeight = 48;
-const rowPadding = 15;
-const styles = StyleSheet.create({
-  row: {
-    // flex: 1,
-    paddingTop: rowPadding,
-    paddingBottom: rowPadding,
-    paddingRight: rowPadding,
-    paddingLeft: rowPadding,
-    height: rowHeight,
-    flexDirection: 'row',
-    // borderColor: '#CCCCCC',
-    // borderBottomWidth: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  title: {
-    flex: 1,
-    // backgroundColor: 'transparent',
-    //
-    // fontSize: 24,
-  },
-
-});

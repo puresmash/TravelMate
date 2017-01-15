@@ -13,9 +13,6 @@ import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
 import {Divider, CollectionView, Input} from '@components/common';
 import EditNewAcc from '@components/Acc/EditNewAcc.js';
-import EditPayment from '@components/Acc/EditPayment.js';
-import EditCredit from '@components/Acc/EditCredit.js';
-import EditAmount from '@components/Acc/EditAmount.js';
 // dispatch
 import Actions from '@actions';
 import { connect } from 'react-redux';
