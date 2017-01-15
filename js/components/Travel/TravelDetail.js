@@ -42,7 +42,6 @@ class TravelDetail extends Component {
         />
         <AccountingList
           tid={tid}
-          aidAry={travel.accounting}
         />
       </ScrollView>
     );

@@ -6,6 +6,7 @@ import Toolbar from './Toolbar';
 import ToolbarItem from './ToolbarItem';
 import Input from './Input';
 import ZoomRow from './ZoomRow';
+import IconRow from './IconRow';
 
 export {
   CollectionView,
@@ -16,4 +17,5 @@ export {
   ToolbarItem,
   Input,
   ZoomRow,
+  IconRow,
 };

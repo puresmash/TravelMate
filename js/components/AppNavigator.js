@@ -48,6 +48,7 @@ import TravelTabView from '@components/Travel/TravelTabView.js';
 import AddNewTravel from '@components/Travel/AddNewTravel.js';
 import NavButton from '@components/common/NavButton.js';
 import AccountingDetail from '@components/Acc/AccountingDetail.js';
+import AddNewAcc from '@components/Acc/AddNewAcc';
 import EditPayment from '@components/Acc/EditPayment.js';
 import EditCredit from '@components/Acc/EditCredit.js';
 import EditNewAcc from '@components/Acc/EditNewAcc.js';
@@ -189,6 +190,9 @@ export default class AppNavigator extends Component {
 
       case 'AddNewUser':
         return <AddNewUser />;
+
+      case 'AddNewAcc':
+        return <AddNewAcc tid={route.tid} />;
 
       default:
         return null;

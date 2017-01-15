@@ -11,28 +11,27 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Constants from '@const';
 const { Colors, Size } = Constants;
 
-const ZoomRow = ({ label, value, onPress, containerStyle, labelStyle }) => {
-
+const IconRow = (props) => {
+  const {
+    label,
+    onPress,
+    containerStyle,
+    labelStyle,
+    backgroundColor
+  } = props;
   return (
-    <TouchableHighlight onPress={onPress}>
-      <View style={[styles.container, containerStyle]}>
+    <TouchableHighlight
+      style={{ backgroundColor: backgroundColor || '#FFF' }}
+      onPress={onPress}
+    >
+      <View style={[styles.container, containerStyle, { backgroundColor: backgroundColor || '#FFF' }]}>
+        <Icon
+          name="ios-add-circle-outline"
+          color={'black'}
+          style={{ marginRight: 8 }}
+          size={18}
+        />
         <Text style={[styles.labelText, labelStyle]}>{label}</Text>
-        <Text
-          style={[styles.valueText, styles.limitText]}
-          numberOfLines={1}
-        >
-          {value}
-        </Text>
-        {
-          // If onPress is undefined, Icon won't be rendered
-          onPress &&
-          <Icon
-            name="ios-arrow-forward"
-            color={Colors.light0}
-            style={{ marginLeft: 8 }}
-            size={18}
-          />
-        }
       </View>
     </TouchableHighlight>
   );
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     padding: Size.rowPadding,
     flexDirection: 'row',
     backgroundColor: '#FFF',
+    borderStyle: 'solid',
     borderColor: Colors.divider,
     borderBottomWidth: 1,
   },
@@ -51,13 +51,9 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
   },
-  valueText: {
-    color: Colors.black54,
-    fontSize: 16,
-  },
   limitText: {
     maxWidth: 150,
   }
 });
 
-export default ZoomRow;
+export default IconRow;

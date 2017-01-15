@@ -36,7 +36,7 @@ class EditNewAcc extends Component {
               key: 'EditPayment',
               title: 'EditPayment',
               aid,
-              index: 2
+              index: 3
             });
           }}
         />
@@ -58,7 +58,7 @@ class EditNewAcc extends Component {
               key: 'EditCredit',
               title: 'EditCredit',
               aid,
-              index: 2
+              index: 3
             });
           }}
         />

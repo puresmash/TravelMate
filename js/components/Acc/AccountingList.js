@@ -6,10 +6,11 @@ import {
   ListView,
 } from 'react-native';
 import { connect } from 'react-redux';
-
+// components
 import AccountingItem from '@components/Acc/AccountingItem.js';
-import Divider from '@components/common/Divider.js';
-
+import { Divider, IconRow } from '@components/common';
+// helper
+import NavigatorHelper from '@utils/NavigatorHelper.js';
 import Constants from '@const'
 const { Colors, Size } = Constants;
 
@@ -57,6 +58,7 @@ class AccountingList extends Component {
           renderSeparator={this._renderSeparator}
           style={[styles.container]}
           enableEmptySections
+          removeClippedSubviews={false}
           // {...this.props}
         />
       </View>
@@ -76,8 +78,21 @@ class AccountingList extends Component {
 
   _renderHeader = (sectionData, sectionID) => {
     return (
-      <View style={{ borderColor: Colors.divider, borderBottomWidth: 1 }}>
+      <View>
         <Divider subHeader={sectionID} />
+        <IconRow
+          label={'Push to add new acc...'}
+          containerStyle={{ borderWidth: 1, elevation: 1 }}
+          backgroundColor={Colors.orange200}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'AddNewAcc',
+              title: 'AddNewAcc',
+              tid: this.props.tid,
+              index: 2
+            });
+          }}
+        />
       </View>
     );
   }
@@ -100,21 +115,19 @@ class AccountingList extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const { accountingMap } = state.accountingReducer;
+  const { travels } = state.travelReducer;
+  const aidAry = travels.get(ownProps.tid).accounting;
   return {
     accountingMap,
+    aidAry,
   };
 }
 
 export default connect(mapStateToProps)(AccountingList);
 
 const styles = StyleSheet.create({
-  accountingList: {
-    // flex: 1,
-    // alignSelf: 'stretch',
-    // backgroundColor: '#AAAAAA',
-  },
   container: {
     flex: 1,
     // width: Dimensions.get('window').width,

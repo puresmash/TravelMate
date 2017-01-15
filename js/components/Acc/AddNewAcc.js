@@ -4,14 +4,14 @@ import {
   View,
   Button,
   Dimensions,
+  Platform,
 } from 'react-native';
 // import _ from 'lodash';
 // helper
 import Constants from '@const'
 const { Colors, Size } = Constants;
-import NavigatorHelper from '@utils/NavigatorHelper.js';
 // components
-import {Divider, CollectionView, Input} from '@components/common';
+import { Divider, CollectionView, Input } from '@components/common';
 import EditNewAcc from '@components/Acc/EditNewAcc.js';
 // dispatch
 import Actions from '@actions';
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: Dimensions.get('window').width,
-    // backgroundColor: '#DDDDDD',
+    marginTop: Platform.OS === 'ios' ? 64 : 56,
+    backgroundColor: '#DDDDDD',
   },
   row: {
     // width: Dimensions.get('window').width,
