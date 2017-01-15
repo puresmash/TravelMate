@@ -6,12 +6,12 @@ import {
   ScrollView,
 } from 'react-native';
 // import _ from 'lodash';
-
+import NavigatorHelper from '@utils/NavigatorHelper.js';
 import CollectionView from '@components/common/CollectionView.js';
 import EditPayment from '@components/Acc/EditPayment.js';
 import EditCredit from '@components/Acc/EditCredit.js';
 import EditAmount from '@components/Acc/EditAmount.js';
-import Divider from '@components/common/Divider.js';
+import { Divider, Input, ZoomRow } from '@components/common';
 // dispatch
 import Actions from '@actions';
 import { connect } from 'react-redux';
@@ -26,14 +26,48 @@ class EditNewAcc extends Component {
   }
 
   render() {
-    const { aid, accountingMap } = this.props;
+    const { aid, accountingMap, dispatch } = this.props;
     const accounting = accountingMap.get(aid);
     const payment = accounting ? accounting.payment : '';
     const credit = accounting ? accounting.credit : '';
     const amount = accounting ? accounting.amount.toString() : '';
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.row}>
+        <ZoomRow
+          label={'Payment'}
+          value={this.getUserName(payment)}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'EditPayment',
+              title: 'EditPayment',
+              aid,
+              index: 2
+            });
+          }}
+        />
+        <Input
+          label={'Amount'}
+          // value={amount}
+          placeholder={'Insert Amount for Each'}
+          containerStyle={{ borderTopWidth: 0 }}
+          keyboardType={'numeric'}
+          onChangeText={(text) => {
+            dispatch(Actions.UpdAccountingAmount(aid, amount));
+          }}
+        />
+        <ZoomRow
+          label={'Credit'}
+          value={this.getMultiUserName(credit)}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'EditCredit',
+              title: 'EditCredit',
+              aid,
+              index: 2
+            });
+          }}
+        />
+        {/* <View style={styles.row}>
           <Text style={styles.labelText}>Payment</Text>
           <Text>{this.getUserName(payment)}</Text>
         </View>
@@ -44,9 +78,9 @@ class EditNewAcc extends Component {
         <View style={styles.row}>
           <Text style={styles.labelText}>Credit</Text>
           <Text>{this.getMultiUserName(credit)}</Text>
-        </View>
-        <Divider subHeader={this.state.step} />
-        {this.renderEditor()}
+        </View> */}
+        {/* <Divider subHeader={this.state.step} />
+        {this.renderEditor()} */}
       </ScrollView>
     );
   }

@@ -14,7 +14,7 @@ const Input = (props) => {
   const {
     label,
     value,
-    containerStyle,
+    warning,
     onChange,
     onChangeText,
     placeholder,
@@ -22,9 +22,22 @@ const Input = (props) => {
     onSubmitEditing
   } = props;
 
+  let { labelStyle, containerStyle } = props;
+
+  if (warning) {
+    labelStyle = {
+      color: 'red',
+      ...labelStyle
+    };
+    containerStyle = {
+      borderColor: 'red',
+      ...containerStyle
+    };
+  }
+
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.labelText}>{label}</Text>
+      <Text style={[styles.labelText, labelStyle]}>{label}</Text>
       <TextInput
         style={styles.textInput}
         placeholder={placeholder}
@@ -62,22 +75,24 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     padding: 0,
     paddingTop: 3,
-    marginRight: 15,
+    paddingRight: Size.rowPadding,
     paddingLeft: 5,
     fontSize: 16,
     ...Platform.select({
       ios: {
         height: Size.rowHeight - 2,
         lineHeight: Size.rowHeight - 2,
+        textAlign: 'right',
       },
       android: {
         height: Size.rowHeight - 2 - 5,
         textAlignVertical: 'center',
         paddingBottom: 3,
         // includeFontPadding: 'false', // rn 0.40
+        textAlign: 'auto',
       },
     }),
-    textAlign: 'right',
+
     // backgroundColor: 'orange',
   },
   labelText: {

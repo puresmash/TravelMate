@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  Button,
   Dimensions,
 } from 'react-native';
 // import _ from 'lodash';
@@ -28,52 +29,83 @@ class AddNewAcc extends Component {
     super(props);
     this.state = {
       step: 1,
+      aid: props.accountingMap.size.toString(),
+      title: '',
+      warning: false,
     };
   }
 
   // componentWillMount(){ console.log('addAcc cwm'); }
 
   render() {
-    const { tid, travels, accountingMap } = this.props;
-    const { step } = this.state;
+    const { title, warning } = this.state;
     return (
       <View style={styles.container}>
         <Divider subHeader="New accounting" />
+
         <Input
           label={'Title'}
+          value={title}
           placeholder="Dinner Bill"
-          onSubmitEditing={(event) => {
-            const title = event.nativeEvent.text;
-            if (step === 1) {
-              const size = accountingMap.size;
-              this.aid = size.toString();
-              const aidAry = travels.get(tid).accounting;
-              aidAry.push(this.aid);
-              this.props.dispatch(Actions.AddAccounting(this.aid, title));
-              this.props.dispatch(Actions.UpdAccountingList(tid, aidAry));
-              this.setState({ step: 2 });
-            } else {
-              this.props.dispatch(Actions.UpdAccountingTitle(this.aid, title));
-            }
+          warning={warning}
+          onChangeText={(text) => {
+            this.setState({ title: text });
           }}
         />
+        {this.renderButton()}
         {this.renderStep()}
       </View>
     );
   }
 
-  renderStep = () => {
-    const { step } = this.state;
-    // const { travels, dispatch } = this.props;
-    // const travel = travels.get(this.tid);
-    if (!this.aid) {
+  renderButton = () => {
+    if (this.state.step === 1) {
+      return (
+        <View style={styles.btnContainer}>
+          <Button
+            onPress={this.addNewAcc}
+            title={'Confirm'}
+            color={'#007aff'}
+          />
+        </View>
+      );
+    }
+    return null;
+  }
+
+  addNewAcc = () => {
+    const { tid, travels } = this.props;
+    const { aid, title } = this.state;
+    if (!title) {
+      this.setState({ warning: true });
       return null;
     }
+    this.setState({ warning: false });
+
+    const aidAry = travels.get(tid).accounting;
+    aidAry.push(aid);
+
+    this.props.dispatch(Actions.AddAccounting(aid, title));
+    this.props.dispatch(Actions.UpdAccountingList(tid, aidAry));
+    this.setState({ step: 2 });
+  }
+
+  updAccTitle = () => {
+    this.props.dispatch(Actions.UpdAccountingTitle(this.state.aid, this.state.title));
+  }
+
+  renderStep = () => {
+    const { step, aid } = this.state;
+    // const { travels, dispatch } = this.props;
+    // const travel = travels.get(this.tid);
+    // if (!aid) {
+    //   return null;
+    // }
 
     switch (step) {
       case 2:
         return (
-          <EditNewAcc aid={this.aid} />
+          <EditNewAcc aid={aid} />
         );
       default:
         return null;
@@ -112,4 +144,13 @@ const styles = StyleSheet.create({
   labelText: {
     flex: 1,
   },
+  btnContainer: {
+    // flex: 1,
+    // alignSelf: 'stretch',
+    // backgroundColor: '#fff',
+    // borderColor: '#007aff',
+    // borderWidth: 1,
+    // borderRadius: 5,
+    // margin: 5,
+  }
 });

@@ -7,10 +7,10 @@ import {
   Platform,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons';
 import NavigatorHelper from '@utils/NavigatorHelper.js';
-import { Divider, Input } from '@components/common';
-import Constants from '@const'
+import { Divider, Input, ZoomRow } from '@components/common';
+import Constants from '@const';
 const { Colors, Size } = Constants;
 // dispatch
 import Actions from '@actions';
@@ -51,24 +51,18 @@ class AccountingDetail extends Component {
             dispatch(Actions.UpdAccountingDate(aid, date));
           }}
         />
-
-        <TouchableHighlight onPress={() => {
-          NavigatorHelper.push({
-            key: 'EditPayment',
-            title: 'EditPayment',
-            aid,
-            index: 3
-          });
-        }}>
-          <View style={styles.row}>
-            <Text style={styles.labelText}>Payment</Text>
-            <Text>{this.getUserName(accounting.payment)}</Text>
-            <Icon name="ios-arrow-forward"
-              color={Colors.light0}
-              style={{ marginLeft: 8 }}
-              size={18} />
-          </View>
-        </TouchableHighlight>
+        <ZoomRow
+          label={'Payment'}
+          value={this.getUserName(accounting.payment)}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'EditPayment',
+              title: 'EditPayment',
+              aid,
+              index: 3
+            });
+          }}
+        />
         <Input
           label={'Amount'}
           value={amount}
@@ -80,26 +74,18 @@ class AccountingDetail extends Component {
             dispatch(Actions.UpdAccountingAmount(aid, newAmount));
           }}
         />
-        <TouchableHighlight onPress={() => {
-          NavigatorHelper.push({
-            key: 'EditCredit',
-            title: 'EditCredit',
-            aid,
-            index: 3
-          })
-        }}>
-          <View style={styles.row}>
-            <Text style={styles.labelText}>Credit</Text>
-            <Text numberOfLines={1} style={styles.limitText}>
-              {this.getMultiUserName(accounting.credit)}
-            </Text>
-            <Icon name="ios-arrow-forward"
-              color={Colors.light0}
-              style={{ marginLeft: 8 }}
-              size={18}/>
-          </View>
-        </TouchableHighlight>
-
+        <ZoomRow
+          label={'Credit'}
+          value={this.getMultiUserName(accounting.credit)}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'EditCredit',
+              title: 'EditCredit',
+              aid,
+              index: 3
+            });
+          }}
+        />
       </View>
 
     );

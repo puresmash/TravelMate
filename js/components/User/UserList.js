@@ -11,7 +11,7 @@ import {
 // dispatch
 import { connect } from 'react-redux';
 // components
-import Divider from '@components/common/Divider.js';
+import { Divider, ZoomRow } from '@components/common';
 // helper
 import NavigatorHelper from '@utils/NavigatorHelper.js'
 import EmitterUtils from '@utils/EmitterUtils.js';
@@ -82,22 +82,22 @@ class UserList extends Component {
   }
 
   _renderRow = (user) => {
-    if (!user.name)
+    if (!user.name) {
       return null;
-    const uid = user.id;
+    }
     return (
-        <TouchableHighlight onPress={() => {
-          NavigatorHelper.push({
-            key: 'EditUser',
-            title: 'EditUser',
-            uid,
-            index: 1
-          });
-        }}>
-          <View style={styles.row}>
-            <Text style={styles.title}>{user.name}</Text>
-          </View>
-        </TouchableHighlight>
+        <ZoomRow
+          label={user.name}
+          containerStyle={{ borderBottomWidth: 0 }}
+          onPress={() => {
+            NavigatorHelper.push({
+              key: 'EditUser',
+              title: 'EditUser',
+              uid: user.id,
+              index: 1
+            });
+          }}
+        />
     );
   }
 

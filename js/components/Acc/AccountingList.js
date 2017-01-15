@@ -63,12 +63,15 @@ class AccountingList extends Component {
     );
   }
   _renderRow = (accounting) => {
-    return (
-      <AccountingItem
-        aid={accounting.id}
-        accounting={accounting}
-      />
-    );
+    if (accounting && accounting.id) {
+      return (
+        <AccountingItem
+          aid={accounting.id}
+          accounting={accounting}
+        />
+      );
+    }
+    return null;
   }
 
   _renderHeader = (sectionData, sectionID) => {
