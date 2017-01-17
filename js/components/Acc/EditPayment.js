@@ -3,13 +3,14 @@ import {
   StyleSheet,
   Text,
   View,
+  Platform,
   TouchableHighlight,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Constants from '@const';
 const { Colors } = Constants;
-import CollectionView from '@components/common/CollectionView.js';
+import { Divider, CollectionView } from '@components/common';
 import _ from 'lodash';
 // dispatch
 import Actions from '@actions';
@@ -27,12 +28,15 @@ class EditPayment extends Component {
     const { aid, users } = this.props;
 
     return (
-      <CollectionView
-        style={[styles.container, this.props.style]}
-        aid={aid}
-        items={users}
-        renderBrick={this.renderBrick}
-      />
+      <View style={styles.container}>
+        <Divider subHeader={'Single Choice'}/>
+        <CollectionView
+          style={[styles.collectContainer, this.props.style]}
+          aid={aid}
+          items={users}
+          renderBrick={this.renderBrick}
+        />
+      </View>
     );
   }
 
@@ -80,8 +84,12 @@ export default connect(mapStateToProps)(EditPayment);
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 64 + 8,
     flex: 1,
+    marginTop: Platform.OS === 'ios' ? 64 : 56,
+    backgroundColor: Colors.light0,
+  },
+  collectContainer: {
+    // flex: 1,
     backgroundColor: '#FFFFFF',
   },
   brick: {

@@ -25,7 +25,7 @@ class EditNewAcc extends Component {
     const accounting = accountingMap.get(aid);
     const payment = accounting ? accounting.payment : '';
     const credit = accounting ? accounting.credit : '';
-    const amount = accounting ? accounting.amount.toString() : '0';
+    // const amount = accounting ? accounting.amount.toString() : '0';
     return (
       <ScrollView style={styles.container}>
         <ZoomRow
@@ -46,7 +46,7 @@ class EditNewAcc extends Component {
           placeholder={'Insert Amount for Each'}
           containerStyle={{ borderTopWidth: 0 }}
           keyboardType={'numeric'}
-          onChangeText={(text) => {
+          onChangeText={(amount) => {
             dispatch(Actions.UpdAccountingAmount(aid, amount));
           }}
         />
@@ -70,7 +70,6 @@ class EditNewAcc extends Component {
     if (!idAry) {
       return '';
     }
-
     const nameAry = idAry.map((id) => this.getUserName(id));
     return nameAry.join(', ');
   }
@@ -82,7 +81,6 @@ class EditNewAcc extends Component {
     const { users } = this.props;
     return users.get(id).name;
   }
-
 }
 
 function mapStateToProps(state) {

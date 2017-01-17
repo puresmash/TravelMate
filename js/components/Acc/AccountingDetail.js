@@ -92,19 +92,17 @@ class AccountingDetail extends Component {
   }
 
   getMultiUserName = (idAry) => {
-    if (!idAry)
+    if (!idAry) {
       return '';
-
-    let nameAry = idAry.map((id) => {
-      return this.getUserName(id);
-    });
+    }
+    const nameAry = idAry.map((id) => this.getUserName(id));
     return nameAry.join(', ');
   }
 
   getUserName = (id) => {
-    if (id == null || id === '')
+    if (id == null || id === '') {
       return '';
-
+    }
     const { users } = this.props;
     return users.get(id).name;
   }

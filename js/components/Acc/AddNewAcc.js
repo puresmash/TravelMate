@@ -148,6 +148,6 @@ const styles = StyleSheet.create({
     // borderColor: '#007aff',
     // borderWidth: 1,
     // borderRadius: 5,
-    // margin: 5,
+    marginTop: 30,
   }
 });

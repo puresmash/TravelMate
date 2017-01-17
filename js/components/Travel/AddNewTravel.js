@@ -48,11 +48,13 @@ class AddNewTravel extends Component {
   renderButton = () => {
     if (this.state.step === 1) {
       return (
-        <Button
-          onPress={this.addNewTravel}
-          title={'Confirm'}
-          color={'#007aff'}
-        />
+        <View style={styles.btnContainer}>
+          <Button
+            onPress={this.addNewTravel}
+            title={'Confirm'}
+            color={'#007aff'}
+          />
+        </View>
       );
     }
     return null;
@@ -61,7 +63,7 @@ class AddNewTravel extends Component {
   renderStep = () => {
     const { step, tid } = this.state;
     const { travels, dispatch } = this.props;
-    const travel = travels.get(this.tid);
+    const travel = travels.get(tid);
     if (step === 2) {
       return (
         <View>
@@ -119,4 +121,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 64 : 56,
     backgroundColor: Colors.light0,
   },
+  btnContainer: {
+    marginTop: 30,
+  }
 });

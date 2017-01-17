@@ -46,18 +46,20 @@ class AddNewUser extends Component {
             }}
           />
           {this.renderButton()}
-          {this.renderStep()}
+          {/* {this.renderStep()} */}
       </View>
     );
   }
   renderButton = () => {
     if (this.state.step === 1) {
       return (
-        <Button
-          onPress={this.addNewUser}
-          title={'Confirm'}
-          color={'#007aff'}
-        />
+        <View style={styles.btnContainer}>
+          <Button
+            onPress={this.addNewUser}
+            title={'Confirm'}
+            color={'#007aff'}
+          />
+        </View>
       );
     }
     return null;
@@ -70,12 +72,12 @@ class AddNewUser extends Component {
     }
     this.setState({ warning: false });
 
-    this.props.dispatch(Actions.AddUser(this.uid, name));
+    this.props.dispatch(Actions.AddUser(uid, name));
     this.setState({ step: 2 });
   }
   renderStep = () => {
-    const { step } = this.state;
-    if (!this.uid) {
+    const { uid, step } = this.state;
+    if (!uid) {
       return null;
     }
     switch (step) {
@@ -105,4 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DDDDDD',
     marginTop: Platform.OS === 'ios' ? 64 : 56,
   },
+  btnContainer: {
+    marginTop: 30,
+  }
 });

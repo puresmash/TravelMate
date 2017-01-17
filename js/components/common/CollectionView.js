@@ -22,7 +22,7 @@ export default class CollectionView extends Component {
     return (
       <View {...this.props}>
         <ListView
-          style={{ flex: 1 }}
+          style={{ paddingTop: 8 }}
           renderRow={this.renderRow}
           dataSource={ds.cloneWithRows(data)}
         />
@@ -70,9 +70,11 @@ export default class CollectionView extends Component {
 // const SCREEN_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   row: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'row',
+    // justifyContent: 'space-around',
     marginBottom: 8,
     paddingRight: 8,
+    // paddingTop: 8,
   },
 });

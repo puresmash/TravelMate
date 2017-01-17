@@ -19,6 +19,7 @@ const Input = (props) => {
     onChangeText,
     placeholder,
     keyboardType,
+    inputStyle,
     onSubmitEditing
   } = props;
 
@@ -39,7 +40,7 @@ const Input = (props) => {
     <View style={[styles.container, containerStyle]}>
       <Text style={[styles.labelText, labelStyle]}>{label}</Text>
       <TextInput
-        style={styles.textInput}
+        style={[styles.textInput, inputStyle]}
         placeholder={placeholder}
         keyboardType={keyboardType || 'default'}
         autoCorrect={false}
@@ -82,17 +83,15 @@ const styles = StyleSheet.create({
       ios: {
         height: Size.rowHeight - 2,
         lineHeight: Size.rowHeight - 2,
-        textAlign: 'right',
       },
       android: {
         height: Size.rowHeight - 2 - 5,
         textAlignVertical: 'center',
         paddingBottom: 3,
         // includeFontPadding: 'false', // rn 0.40
-        textAlign: 'auto',
       },
     }),
-
+    textAlign: 'right',
     // backgroundColor: 'orange',
   },
   labelText: {

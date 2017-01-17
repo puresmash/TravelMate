@@ -35,6 +35,7 @@ class TravelDetail extends Component {
           label={'Title'}
           value={travel.title}
           placeholder={'Taiwan 2016'}
+          inputStyle={{ textAlign: 'auto' }}
           onChange={(event) => {
             const title = event.nativeEvent.text;
             dispatch(Actions.UpdTravelTitle(tid, title));
